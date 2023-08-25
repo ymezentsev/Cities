@@ -18,3 +18,4 @@ public class Validator {
         return Character.toLowerCase(lastComputerCityChar) == Character.toLowerCase(firstInputChar);
     }
 }
+
