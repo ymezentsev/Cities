@@ -1,7 +1,7 @@
 package databaseReader;
 
-import java.util.List;
+import java.util.Set;
 
 public interface Reader {
-    List<String> readCitiesToList(String source);
+    Set<String> readCitiesToList(String source);
 }

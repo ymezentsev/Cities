@@ -3,10 +3,10 @@ package gameLogic;
 import databaseReader.FileReaderImpl;
 import databaseReader.Reader;
 
-import java.util.List;
+import java.util.Set;
 
 public class GameCore {
-    private List<String> cities;
+    private Set<String> cities;
     private Reader reader;
 
     //пока захоркоджена назва файлу, потрібно підтягувати в залежності від вибору мови

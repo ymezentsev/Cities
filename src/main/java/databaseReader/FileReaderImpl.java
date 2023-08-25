@@ -3,19 +3,20 @@ package databaseReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
 
 public class FileReaderImpl implements Reader {
 
     @Override
-    public List<String> readCitiesToList(String source) {
-        List<String> cities = new ArrayList<>();
+    public Set<String> readCitiesToList(String source) {
+        Set<String> cities = new TreeSet<>();
 
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(source)))) {
             while (scanner.hasNext()) {
-                cities.add(scanner.next());
+                cities.add(scanner.next().toLowerCase());
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
