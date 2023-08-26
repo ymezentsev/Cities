@@ -28,9 +28,12 @@ public class RulesWindow {
         JButton closeButton = new JButton(btnOk);
         closeButton.addActionListener(e -> dialog.dispose());
 
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(closeButton);
+
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(new JScrollPane(textArea), BorderLayout.NORTH);
-        panel.add(closeButton, BorderLayout.SOUTH);
+        panel.add(buttonPanel, BorderLayout.SOUTH);
 
         dialog.getContentPane().add(panel);
         dialog.setLocationRelativeTo(parentFrame);
