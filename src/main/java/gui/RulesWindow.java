@@ -3,7 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-//має викликатися при натисканні на кнопку "Правила Гри"
+//Contains rules for "Cities" game.
 public class RulesWindow {
     String btnOk = "Ok";                //ті всі значення залежать від локалі, поки так
     String txtRules = "Cities Game Rules:\n" +
@@ -17,7 +17,10 @@ public class RulesWindow {
             "\n" +
             "4. Game ends when computer run out of the words, or player enters \"I give up.\" instead of city name\n";
     String titleRules = "How to play \"Cities\" game";
-    public void showModalDialog(JFrame parentFrame) {
+    public RulesWindow(JFrame parentFrame){
+        showModalDialog(parentFrame);
+    }
+    private void showModalDialog(JFrame parentFrame) {
         JDialog dialog = new JDialog(parentFrame, titleRules, true);
         dialog.setSize(600, 250);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
