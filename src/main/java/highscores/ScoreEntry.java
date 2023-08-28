@@ -1,19 +1,9 @@
-package gui;
+package highscores;
 
 //class for single score entry, used to form "high scores" table.
 //implement Comparable for ranking (sorting results)
 
-//can be converted to record
-
-//record ScoreEntry(String playerName, int score) implements Comparable<ScoreEntry> {
-//
-//    @Override
-//    public int compareTo(ScoreEntry o) {
-//        return Integer.compare(o.score, this.score);
-//    }
-//}
-
-class ScoreEntry implements Comparable<ScoreEntry> {
+public class ScoreEntry implements Comparable<ScoreEntry> {
     private final String playerName;
     private final int score;
 
