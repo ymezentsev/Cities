@@ -1,0 +1,3 @@
+makeMove=Зробити хід
+computerLabel=Комп'ютер
+inputLabel=Введіть назву міста

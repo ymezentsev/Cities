@@ -1,0 +1,3 @@
+makeMove=Make a Move
+computerLabel=Computer
+inputLabel=Enter the City Name

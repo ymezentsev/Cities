@@ -1,0 +1,3 @@
+makeMove=Urobiť ťah
+computerLabel=Počítač
+inputLabel=Zadajte názov mesta
