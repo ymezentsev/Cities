@@ -6,16 +6,18 @@ import java.util.Collections;
 
 public class HighScoresProcessor {
     private final File scoresFile = new File("src/main/resources/highscores.txt");
-    public HighScoresProcessor(){
+
+    public HighScoresProcessor() {
     }
 
-    public ArrayList<ScoreEntry> processNewEntry(ScoreEntry newScoreEntry){
+    public ArrayList<ScoreEntry> processNewEntry(ScoreEntry newScoreEntry) {
         ArrayList<ScoreEntry> scores = readScoresFile();
         updateScoresTable(newScoreEntry, scores);
         writeScoresFile(scores);
         return scores;
     }
-    private ArrayList<ScoreEntry> readScoresFile(){
+
+    private ArrayList<ScoreEntry> readScoresFile() {
         ArrayList<ScoreEntry> scores = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(scoresFile))) {
             String line;
@@ -29,18 +31,19 @@ public class HighScoresProcessor {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }return scores;
+        }
+        return scores;
     }
 
     private void updateScoresTable(ScoreEntry newScoreEntry, ArrayList<ScoreEntry> scores) {
         scores.add(new ScoreEntry(newScoreEntry.getPlayerName(), newScoreEntry.getScore()));
         Collections.sort(scores);
-        if (scores.size() > 10){
+        if (scores.size() > 10) {
             scores.remove(10);
         }
     }
 
-    private void writeScoresFile(ArrayList<ScoreEntry> scores){
+    private void writeScoresFile(ArrayList<ScoreEntry> scores) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(scoresFile))) {
             for (ScoreEntry score : scores) {
                 String scoreLine = score.getPlayerName() + " " + score.getScore();

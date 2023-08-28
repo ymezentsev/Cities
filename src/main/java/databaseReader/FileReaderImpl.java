@@ -16,7 +16,7 @@ public class FileReaderImpl implements Reader {
 
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader(source)))) {
             while (scanner.hasNext()) {
-                cities.add(scanner.next().toLowerCase());
+                cities.add(scanner.next().trim().toLowerCase());
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

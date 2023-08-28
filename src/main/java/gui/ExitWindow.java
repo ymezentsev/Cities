@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 
 //This window shows on "end game" program state.
 
-public class ModalWindow {
+public class ExitWindow {
     private final ResourceBundle resourceBundle;
     private final String btnExit;
     private final String btnNewGame;
@@ -16,7 +16,7 @@ public class ModalWindow {
     private final String lblResultLoose;
     private final String titleResult;
 
-    public ModalWindow(ResourceBundle resourceBundle, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry){
+    public ExitWindow(ResourceBundle resourceBundle, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
         //current game winner
         this.resourceBundle = resourceBundle;
         this.btnExit = resourceBundle.getString("btnExit");
@@ -26,16 +26,18 @@ public class ModalWindow {
         this.titleResult = resourceBundle.getString("titleResult");
         showModalDialog(parentFrame, win, newScoreEntry);
     }
+
     private void showModalDialog(JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
         JDialog dialog = new JDialog(parentFrame, titleResult, true);
         dialog.setSize(250, 150);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         String lblResult;
-        if(win){
+        if (win) {
             lblResult = lblResultWin;
         } else {
-            lblResult = lblResultLoose;}
+            lblResult = lblResultLoose;
+        }
 
         JLabel label = new JLabel(lblResult);
         label.setHorizontalAlignment(JLabel.CENTER);
@@ -43,16 +45,17 @@ public class ModalWindow {
         JButton newGameButton = new JButton(btnNewGame);
         newGameButton.addActionListener(e -> {
             dialog.dispose();
-//            WelcomeWindow welcomeWindow = new WelcomeWindow(resourceBundle, newScoreEntry.getPlayerName());
-//            welcomeWindow.showWindow();
+            parentFrame.dispose();
+            WelcomeWindow welcomeWindow = new WelcomeWindow(resourceBundle, newScoreEntry.getPlayerName());
+            welcomeWindow.showWindow();
         });
-
-
 
         JButton exitButton = new JButton(btnExit);
         exitButton.addActionListener(e -> {
             dialog.dispose();
-            new HighScoresWindow(resourceBundle, newScoreEntry);
+            //для тесту, замінити на System.exit(0)
+            new HighScoresWindow(resourceBundle, newScoreEntry).showWindow();
+            // System.exit(0);
         });
 
 

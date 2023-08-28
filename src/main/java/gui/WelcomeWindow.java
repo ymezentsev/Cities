@@ -1,5 +1,6 @@
 package gui;
 
+import gameLogic.GameCore;
 import languages.LanguageSelector;
 
 import javax.swing.*;
@@ -169,10 +170,9 @@ public class WelcomeWindow {
                 JOptionPane.showMessageDialog(frame, "You must enter a username!",
                         "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                /*frame.dispose();
+                frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
-                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName);*/
-            }
+                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName);            }
         });
 
         return button;

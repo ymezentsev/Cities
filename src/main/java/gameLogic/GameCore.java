@@ -1,64 +1,61 @@
 package gameLogic;
 
+import Exceptions.CityNameException;
+import Exceptions.CityNameValidator;
 import databaseReader.FileReaderImpl;
 import databaseReader.Reader;
+import gui.ExitWindow;
+import highscores.HighScoresProcessor;
+import highscores.ScoreEntry;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
-    
+import java.util.List;
+
 public class GameCore {
     private ResourceBundle resourceBundle;
     private String userName;
-
-    //значення залежні від локалі
-    private String fileName = "src/main/resources/UA_cities.txt";
-    private String exitWord = "здаюсь";
-    private String errorFirstLetter = "Ви ввели місто з неправильною першою буквою";
-    private String errorCity = "Такого міста не існує. Введіть інше місто";
-    private String repeatCity = "Таке місто вже було. Введіть інше місто";
-    //
-
-
-    private Set<String> cities;
-    private Reader reader;
-    private Validator validator;
+    private String fileName;
+    private final String exitWord;
+    private final String errorFirstLetter;
+    private final String errorCity;
+    private final String errorTitle;
+    private final String repeatCity;
+    private final String lastLetterMessageTitle;
+    private final String lastLetterException;
+    static Set<String> cities;  // зробити нестатичним
+    private final Reader reader;
     private int countUserStep;
-    private int countComputerStep;
 
     public GameCore(ResourceBundle resourceBundle, String userName) {
         this.resourceBundle = resourceBundle;
         this.userName = userName;
-        fileName = resourceBundle.getString("filename");
+        fileName = resourceBundle.getString("fileName");
         exitWord = resourceBundle.getString("exitWord");
+        errorTitle = resourceBundle.getString("errorTitle");
         errorFirstLetter = resourceBundle.getString("errorFirstLetter");
         errorCity = resourceBundle.getString("errorCity");
         repeatCity = resourceBundle.getString("repeatCity");
+        lastLetterMessageTitle = resourceBundle.getString("lastLetterMessageTitle");
+        lastLetterException = resourceBundle.getString("lastLetterException");
 
-        // reader = new FileReaderImpl();
-        // cities = reader.readCitiesToList(fileName);
-        validator = new Validator();
+        reader = new FileReaderImpl();
+        cities = reader.readCitiesToList(fileName);
         countUserStep = 0;
-        countComputerStep = 0;
 
-        gameLoop();
+        //замінити на створення головного вікна
+        JFrame mainWindow = new JFrame("Main Window");
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setPreferredSize(new Dimension(450, 200));
+        mainWindow.pack();
+        mainWindow.setLocationRelativeTo(null);
+        mainWindow.setVisible(true);
+
+        gameLoop(mainWindow);
     }
 
-    public GameCore() {
-        // reader = new FileReaderImpl();
-        // cities = reader.readCitiesToList(fileName);
-        cities = new TreeSet<>();
-        cities.add("київ");
-        cities.add("вознесенськ");
-        cities.add("яворів");
-        cities.add("вінниця");
-        validator = new Validator();
-        countUserStep = 0;
-        countComputerStep = 0;
-
-        gameLoop();
-    }
-
-    private void gameLoop() {
+    private void gameLoop(JFrame mainWindow) {
         String lastComputerCity = null;
         List<String> usedCities = new ArrayList<>();
 
@@ -69,58 +66,89 @@ public class GameCore {
             //Scanner для перевірки, згодом замінити на результат роботи методу обробки кнопки "Зробити хід"
             String inputCity = scanner.nextLine().toLowerCase().trim();
 
+            //check the exit word
             if (inputCity.equalsIgnoreCase(exitWord)) {
-                //замінити на вивід вікна закінчення гри, програш юзера
-                System.exit(0);
+                //record the result of the game in the table of the best results
+                ScoreEntry newScoreEntry = new ScoreEntry(userName, countUserStep);
+                HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
+                highScoresProcessor.processNewEntry(newScoreEntry);
+                //open exit window
+                ExitWindow exitWindow = new ExitWindow(resourceBundle, mainWindow, false,
+                        new ScoreEntry(userName, countUserStep));
+                break;
             }
 
-            //перевірки
+            //check - repeat city
             if (usedCities.contains(inputCity)) {
-                //замінити на вивід модального вікна з помилкою, текст підтягувати в залежності від мови
-
-                //JOptionPane.showMessageDialog(parentFrame, "dialog", "title", JOptionPane.WARNING_MESSAGE);
-                // JOptionPane.ERROR_MESSAGE, JOptionPane.INFORMATION_MESSAGE, JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE or JOptionPane.PLAIN_MESSAGE
-
+                JOptionPane.showMessageDialog(mainWindow, repeatCity, errorTitle, JOptionPane.WARNING_MESSAGE);
+                //для тесту потім прибрати
                 System.out.println(repeatCity);
                 continue;
             }
 
+            //check - correct last letter
             if (lastComputerCity != null) {
-                if (!validator.isFirstLetterCorrect(lastComputerCity, inputCity)) {
-                    //замінити на вивід модального вікна з помилкою, текст підтягувати в залежності від мови
+                if (!new CityNameValidator(cities).isFirstLetterCorrect(lastComputerCity, inputCity)) {
+                    JOptionPane.showMessageDialog(mainWindow, errorFirstLetter, errorTitle, JOptionPane.WARNING_MESSAGE);
+                    //для тесту потім прибрати
                     System.out.println(errorFirstLetter);
                     continue;
                 }
             }
 
-            if (!validator.isCityCorrect(inputCity)) {
-                //замінити на вивід модального вікна з помилкою, текст підтягувати в залежності від мови
+            //check - if city in database
+            if (!new CityNameValidator(cities).isCityInDatabase(inputCity)) {
+                JOptionPane.showMessageDialog(mainWindow, errorCity, errorTitle, JOptionPane.WARNING_MESSAGE);
+                //для тесту потім прибрати
                 System.out.println(errorCity);
                 continue;
             }
 
-            //додати перевірки міста, введеного користувачем
-            //у разі неправильного ввода виводити модальне вікно з помилкою, текст підтягувати в залежності від мови
-
             countUserStep++;
             usedCities.add(inputCity);
             cities.remove(inputCity);
+            //check city name exception
+            inputCity = processCityNameException(mainWindow, inputCity);
 
 
             char lastChar = inputCity.charAt(inputCity.length() - 1);
-            lastComputerCity = getRandomCity(lastChar);
+            if((lastComputerCity = getRandomCity(lastChar, mainWindow)).equals("computerLostOut")){
+                //record the result of the game in the table of the best results
+                ScoreEntry newScoreEntry = new ScoreEntry(userName, countUserStep);
+                HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
+                highScoresProcessor.processNewEntry(newScoreEntry);
+                //open exit window
+                ExitWindow exitWindow = new ExitWindow(resourceBundle, mainWindow, true,
+                        new ScoreEntry(userName, countUserStep));
+                //для тесту потім прибрати
+                System.out.println("You win");
+                break;
+            }
 
             //замінити на вивід міста в основне вікно
             System.out.println(Character.toUpperCase(lastComputerCity.charAt(0))
                     + lastComputerCity.substring(1).toLowerCase());
 
-            countComputerStep++;
             usedCities.add(lastComputerCity);
             cities.remove(lastComputerCity);
+            //check city name exception
+            lastComputerCity = processCityNameException(mainWindow, lastComputerCity);
         }
     }
 
-    private String getRandomCity(char firstChar) {
+    private String processCityNameException(JFrame mainWindow, String cityName) {
+        try {
+            new CityNameValidator(cities).checkLastLetterException(cityName);
+        } catch (CityNameException e) {
+            if (cityName.length() >= 2) {
+                cityName = cityName.substring(0, cityName.length() - 1);
+                JOptionPane.showMessageDialog(mainWindow, lastLetterException, lastLetterMessageTitle, JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        return cityName;
+    }
+
+    private String getRandomCity(char firstChar, JFrame mainWindow) {
         List<String> suitableCities = new ArrayList<>();
         for (String city : cities) {
             if (city.charAt(0) == firstChar) {
@@ -129,9 +157,7 @@ public class GameCore {
         }
 
         if (suitableCities.size() == 0) {
-            //замінити на вивід вікна закінчення гри, програш ПК
-            System.out.println("You win");
-            System.exit(0);
+            return "computerLostOut";
         }
 
         Random random = new Random();

@@ -1,2 +1,10 @@
 player 40
 computer 20
+d 7
+d 7
+user1 2
+1 1
+d 1
+d 1
+d 1
+а 1
