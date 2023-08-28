@@ -81,10 +81,12 @@ public class WelcomeWindow {
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JLabel.CENTER);
         textField.addActionListener(e -> {
-            userName = textField.getText();
-            uaButton.setEnabled(true);
-            gbButton.setEnabled(true);
-            svkButton.setEnabled(true);
+            userName = textField.getText().trim();
+            if (!userName.isBlank()) {
+                uaButton.setEnabled(true);
+                gbButton.setEnabled(true);
+                svkButton.setEnabled(true);
+            }
         });
 
         //positioning window's elements relative each other
@@ -163,9 +165,13 @@ public class WelcomeWindow {
         button.setEnabled(false);
 
         button.addActionListener(e -> {
-            /*frame.dispose();
-            LanguageSelector languageSelector = new LanguageSelector();
-            GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName);*/
+            if (userName.isBlank()) {
+                //show modal window with error
+            } else {
+                /*frame.dispose();
+                LanguageSelector languageSelector = new LanguageSelector();
+                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName);*/
+            }
         });
 
         return button;
