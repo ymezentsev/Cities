@@ -3,6 +3,7 @@ package gameLogic;
 //import databaseReader.FileReaderImpl;
 //import databaseReader.Reader;
 
+import javax.swing.*;
 import java.util.*;
 
 public class GameCore {
@@ -58,6 +59,9 @@ public class GameCore {
             //перевірки
             if(usedCities.contains(inputCity)){
                 //замінити на вивід модального вікна з помилкою, текст підтягувати в залежності від мови
+                //JOptionPane.showMessageDialog(parentFrame, "dialog", "title", JOptionPane.WARNING_MESSAGE);
+                // JOptionPane.ERROR_MESSAGE, JOptionPane.INFORMATION_MESSAGE, JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE or JOptionPane.PLAIN_MESSAGE
+
                 System.out.println(repeatCity);
                 continue;
             }
