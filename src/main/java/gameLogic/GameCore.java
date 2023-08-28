@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.util.*;
 
 public class GameCore {
+    private ResourceBundle resourceBundle;
+    private String userName;
 
     //значення залежні від локалі
     private String fileName = "src/main/resources/UA_cities.txt";
@@ -18,15 +20,32 @@ public class GameCore {
 
 
     static Set<String> cities;
- //   private Reader reader;
+    //   private Reader reader;
     private Validator validator;
     private int countUserStep;
     private int countComputerStep;
 
+    public GameCore(ResourceBundle resourceBundle, String userName) {
+        this.resourceBundle = resourceBundle;
+        this.userName = userName;
+        fileName = resourceBundle.getString("filename");
+        exitWord = resourceBundle.getString("exitWord");
+        errorFirstLetter = resourceBundle.getString("errorFirstLetter");
+        errorCity = resourceBundle.getString("errorCity");
+        repeatCity = resourceBundle.getString("repeatCity");
+
+        // reader = new FileReaderImpl();
+        // cities = reader.readCitiesToList(fileName);
+        validator = new Validator();
+        countUserStep = 0;
+        countComputerStep = 0;
+
+        gameLoop();
+    }
 
     public GameCore() {
-       // reader = new FileReaderImpl();
-       // cities = reader.readCitiesToList(fileName);
+        // reader = new FileReaderImpl();
+        // cities = reader.readCitiesToList(fileName);
         cities = new TreeSet<>();
         cities.add("київ");
         cities.add("вознесенськ");
@@ -43,7 +62,6 @@ public class GameCore {
         String lastComputerCity = null;
         List<String> usedCities = new ArrayList<>();
 
-
         //Scanner для перевірки, згодом замінити на результат роботи методу обробки кнопки "Зробити хід"
         Scanner scanner = new Scanner(System.in);
 
@@ -57,8 +75,9 @@ public class GameCore {
             }
 
             //перевірки
-            if(usedCities.contains(inputCity)){
+            if (usedCities.contains(inputCity)) {
                 //замінити на вивід модального вікна з помилкою, текст підтягувати в залежності від мови
+
                 //JOptionPane.showMessageDialog(parentFrame, "dialog", "title", JOptionPane.WARNING_MESSAGE);
                 // JOptionPane.ERROR_MESSAGE, JOptionPane.INFORMATION_MESSAGE, JOptionPane.WARNING_MESSAGE, JOptionPane.QUESTION_MESSAGE or JOptionPane.PLAIN_MESSAGE
 
@@ -104,7 +123,7 @@ public class GameCore {
     private String getRandomCity(char firstChar) {
         List<String> suitableCities = new ArrayList<>();
         for (String city : cities) {
-            if (city.charAt(0) == firstChar){
+            if (city.charAt(0) == firstChar) {
                 suitableCities.add(city);
             }
         }
