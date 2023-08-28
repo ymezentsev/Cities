@@ -1,11 +1,11 @@
 package gameLogic;
 
-//import databaseReader.FileReaderImpl;
-//import databaseReader.Reader;
+import databaseReader.FileReaderImpl;
+import databaseReader.Reader;
 
 import javax.swing.*;
 import java.util.*;
-
+    
 public class GameCore {
     private ResourceBundle resourceBundle;
     private String userName;
@@ -19,8 +19,8 @@ public class GameCore {
     //
 
 
-    static Set<String> cities;
-    //   private Reader reader;
+    private Set<String> cities;
+    private Reader reader;
     private Validator validator;
     private int countUserStep;
     private int countComputerStep;
