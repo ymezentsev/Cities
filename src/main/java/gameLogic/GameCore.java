@@ -1,7 +1,7 @@
 package gameLogic;
 
-import Exceptions.CityNameException;
-import Exceptions.CityNameValidator;
+import exceptions.CityNameException;
+import exceptions.CityNameValidator;
 import databaseReader.FileReaderImpl;
 import databaseReader.Reader;
 import gui.ExitWindow;
