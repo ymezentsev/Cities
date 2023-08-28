@@ -166,7 +166,8 @@ public class WelcomeWindow {
 
         button.addActionListener(e -> {
             if (userName.isBlank()) {
-                //show modal window with error
+                JOptionPane.showMessageDialog(frame, "You must enter a username!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 /*frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
