@@ -1,0 +1,2 @@
+player 40
+computer 20
