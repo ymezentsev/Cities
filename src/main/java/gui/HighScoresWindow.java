@@ -6,8 +6,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-
-//потрібно покласти в resources файл highscores.txt
+import java.util.ResourceBundle;
 
 //read highscores.txt file that contains previous games results, sorted by higher score
 //add result of current game
@@ -15,16 +14,19 @@ import java.util.Collections;
 //Create and show High Scores table
 //saves updated high scores in file highscores.txt
 public class HighScoresWindow extends JFrame {
-    private DefaultTableModel tableModel;
-    String btnExit = "Exit";
-    String columnPlayer = "Player";
-    String columnRank = "Rank";
-    String columnScore = "Score";
-    String titleHighScores = "High Scores";
+    private final DefaultTableModel tableModel;
     ScoreEntry newScoreEntry;
 
-    public HighScoresWindow(ScoreEntry newScoreEntry) {
+    public HighScoresWindow(ResourceBundle resourceBundle, ScoreEntry newScoreEntry) {
+
+        String btnExit = resourceBundle.getString("btnExit");
+        String columnPlayer = resourceBundle.getString("columnPlayer");
+        String columnRank = resourceBundle.getString("columnRank");
+        String columnScore = resourceBundle.getString("columnScore");
+        String titleHighScores = resourceBundle.getString("titleHighScores");
+
         this.newScoreEntry = newScoreEntry;
+
         setTitle(titleHighScores);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);

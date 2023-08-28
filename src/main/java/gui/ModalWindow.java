@@ -2,21 +2,31 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
-//має викликатися на стан гри "завершено"
+//This window shows on "end game" program state.
 
 public class ModalWindow {
-    String btnExit = "Exit";                //ті всі значення залежать від локалі, поки так
-    String btnNewGame = "New game";
-    String lblResultWin = "You win! Congrats!";
-    String lblResultLoose = "You loose.. Maybe next time..";
-    String titleResult = "Result";
-    boolean win = false;            //флаг для виводу тексту у вікні для "Win" або "Loose"
+    private final ResourceBundle resourceBundle;
+    private final String btnExit;
+    private final String btnNewGame;
+    private final String lblResultWin;
+    private final String lblResultLoose;
+    private final String titleResult;
 
-
-    public void showModalDialog(JFrame parentFrame) {
+    public ModalWindow(ResourceBundle resourceBundle, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry){
+        //current game winner
+        this.resourceBundle = resourceBundle;
+        this.btnExit = resourceBundle.getString("btnExit");
+        this.btnNewGame = resourceBundle.getString("btnNewGame");
+        this.lblResultWin = resourceBundle.getString("lblResultWin");
+        this.lblResultLoose = resourceBundle.getString("lblResultLoose");
+        this.titleResult = resourceBundle.getString("titleResult");
+        showModalDialog(parentFrame, win, newScoreEntry);
+    }
+    private void showModalDialog(JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
         JDialog dialog = new JDialog(parentFrame, titleResult, true);
-        dialog.setSize(200, 150);
+        dialog.setSize(250, 150);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         String lblResult;
@@ -28,18 +38,25 @@ public class ModalWindow {
         JLabel label = new JLabel(lblResult);
         label.setHorizontalAlignment(JLabel.CENTER);
 
-        JButton okButton = new JButton(btnNewGame);
-        okButton.addActionListener(e -> {
-            //todo newGame()                //має запускати нову гру
+        JButton newGameButton = new JButton(btnNewGame);
+        newGameButton.addActionListener(e -> {
             dialog.dispose();
+//            WelcomeWindow welcomeWindow = new WelcomeWindow(resourceBundle, newScoreEntry.getPlayerName());
+//            welcomeWindow.showWindow();
         });
 
-        JButton cancelButton = new JButton(btnExit);
-        cancelButton.addActionListener(e -> System.exit(0));
+
+
+        JButton exitButton = new JButton(btnExit);
+        exitButton.addActionListener(e -> {
+            dialog.dispose();
+            new HighScoresWindow(resourceBundle, newScoreEntry);
+        });
+
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
+        buttonPanel.add(newGameButton);
+        buttonPanel.add(exitButton);
 
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.add(label, BorderLayout.CENTER);
