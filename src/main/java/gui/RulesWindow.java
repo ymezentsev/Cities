@@ -2,6 +2,7 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ResourceBundle;
 
 //Contains rules for "Cities" game.
@@ -18,6 +19,8 @@ public class RulesWindow {
 
     public void showModalDialog(JFrame parentFrame) {
         JDialog dialog = new JDialog(parentFrame, titleRules, true);
+        dialog.setIconImage(Toolkit.getDefaultToolkit()
+                .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         dialog.setSize(500, 300);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
