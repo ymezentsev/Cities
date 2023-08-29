@@ -1,6 +1,7 @@
 package gameLogic;
 
 import difficultyLevels.DifficultyLevel;
+import difficultyLevels.DifficultyLevelTimer;
 import exceptions.CityNameException;
 import exceptions.CityNameValidator;
 import databaseReader.FileReaderImpl;
@@ -8,6 +9,7 @@ import databaseReader.Reader;
 import gui.ExitWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
+import languages.LanguageSelector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +21,8 @@ public class GameCore {
     private String userName;
     private String fileName;
     private DifficultyLevel difficultyLevel;
+    private DifficultyLevelTimer difficultyLevelTimer;
+    private boolean timeOut;
     private final String exitWord;
     private final String errorFirstLetter;
     private final String errorCity;
@@ -34,6 +38,8 @@ public class GameCore {
         this.resourceBundle = resourceBundle;
         this.userName = userName;
         this.difficultyLevel = difficultyLevel;
+        this.timeOut = false;
+        this.difficultyLevelTimer = new DifficultyLevelTimer(difficultyLevel, timeOut);
         fileName = resourceBundle.getString("fileName");
         exitWord = resourceBundle.getString("exitWord");
         errorTitle = resourceBundle.getString("errorTitle");
@@ -51,10 +57,28 @@ public class GameCore {
         JFrame mainWindow = new JFrame("Main Window");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setPreferredSize(new Dimension(450, 200));
+
+        JPanel panel = new JPanel();
+        JLabel text1 = new JLabel();
+        text1.setHorizontalAlignment(JLabel.CENTER);
+
+        JButton button = new JButton("кнопка");
+        button.addActionListener(e -> {
+            difficultyLevelTimer.setAnswerRight(true);
+        });
+
+        panel.add(text1);
+        panel.add(button);
+        mainWindow.getContentPane().add(panel, BorderLayout.CENTER);
+
         mainWindow.pack();
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setVisible(true);
 
+        //start levels timer
+        Thread thread1 = new Thread(() -> difficultyLevelTimer.drawTimer(text1));
+        thread1.start();
+        //
         gameLoop(mainWindow);
     }
 
@@ -70,7 +94,7 @@ public class GameCore {
             String inputCity = scanner.nextLine().toLowerCase().trim();
 
             //check the exit word
-            if (inputCity.equalsIgnoreCase(exitWord)) {
+            if (inputCity.equalsIgnoreCase(exitWord) || timeOut) {
                 //record the result of the game in the table of the best results
                 ScoreEntry newScoreEntry = new ScoreEntry(userName, countUserStep);
                 HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
@@ -115,7 +139,7 @@ public class GameCore {
 
 
             char lastChar = inputCity.charAt(inputCity.length() - 1);
-            if((lastComputerCity = getRandomCity(lastChar, mainWindow)).equals("computerLostOut")){
+            if ((lastComputerCity = getRandomCity(lastChar, mainWindow)).equals("computerLostOut")) {
                 //record the result of the game in the table of the best results
                 ScoreEntry newScoreEntry = new ScoreEntry(userName, countUserStep);
                 HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
