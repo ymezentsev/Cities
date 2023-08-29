@@ -6,6 +6,7 @@ import highscores.ScoreEntry;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -36,6 +37,8 @@ public class HighScoresWindow extends JFrame {
     }
     public void showWindow() {
         setTitle(titleHighScores);
+        setIconImage(Toolkit.getDefaultToolkit()
+                .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
