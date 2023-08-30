@@ -63,7 +63,7 @@ public class WelcomeWindow {
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(490, 275));
+        frame.setPreferredSize(new Dimension(490, 280));
 
         createGUI(frame);
 
@@ -234,7 +234,7 @@ public class WelcomeWindow {
         JButton button = new JButton(textButton, icon);
         button.setVerticalTextPosition(AbstractButton.BOTTOM);
         button.setHorizontalTextPosition(AbstractButton.CENTER);
-        button.setPreferredSize(new Dimension(155, 45));
+        button.setPreferredSize(new Dimension(155, 47));
         button.setEnabled(false);
 
         button.addActionListener(e -> {
