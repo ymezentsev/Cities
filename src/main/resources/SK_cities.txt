@@ -1,141 +1,443 @@
-Bratislava
-Košice
-Prešov
-Žilina
-Banská Bystrica
-Nitra
-Trnava
-Trenčín
-Martin
-Poprad
-Prievidza
-Zvolen
-Považská Bystrica
-Michalovce
-Nové Zámky
-Spišská Nová Ves
-Komárno
-Humenné
-Levice
-Bardejov
-Liptovský Mikuláš
-Lučenec
-Piešťany
-Ružomberok
-Topoľčany
-Trebišov
-Čadca
-Rimavská Sobota
-Dubnica nad Váhom
-Pezinok
-Dunajská Streda
-Partizánske
-Vranov nad Topľou
-Šaľa
-Hlohovec
-Brezno
-Senica
-Snina
-Nové Mesto nad Váhom
-Senec
-Rožňava
-Žiar nad Hronom
-Dolný Kubín
+Alekšince
+Andovce
+Báhoň
+Bánov
 Bánovce nad Bebravou
-Púchov
-Malacky
-Handlová
-Kežmarok
-Stará Ľubovňa
-Sereď
-Skalica
-Galanta
-Kysucké Nové Mesto
-Levoča
-Detva
-Šamorín
-Sabinov
-Stupava
-Revúca
-Veľký Krtíš
-Myjava
-Zlaté Moravce
-Bytča
-Moldava nad Bodvou
-Holíč
-Nová Dubnica
-Svidník
-Kolárovo
-Fiľakovo
-Stropkov
-Štúrovo
+Banská Bystrica
 Banská Štiavnica
-Šurany
-Tvrdošín
-Modra
-Veľké Kapušany
-Stará Turá
-Krompachy
-Veľký Meder
-Vráble
-Sečovce
-Svit
-Krupina
-Námestovo
-Vrútky
-Turzovka
-Kráľovský Chlmec
-Hriňová
-Hnúšťa
-Hurbanovo
-Liptovský Hrádok
-Trstená
-Nová Baňa
-Šahy
-Tornaľa
-Krásno nad Kysucou
-Želiezovce
-Spišská Belá
-Lipany
-Medzilaborce
-Veľký Šariš
-Nemšová
-Sobrance
-Turčianske Teplice
-Žarnovica
-Gelnica
-Vrbové
-Rajec
-Svätý Jur
-Dobšiná
-Poltár
-Gabčíkovo
-Ilava
-Kremnica
-Sládkovičovo
-Gbely
-Nesvady
+Bardejov
+Batizovce
+Belá nad Cirochou
+Beluša
+Bernolákovo
+Bidovce
+Biel
+Blatné
+Bohdanovce
+Bohdanovce nad Trnavou
 Bojnice
-Šaštín-Stráže
-Sliač
+Bojničky
+Borša
+Bošany
+Branč
+Bratislava
+Brekov
+Brezno
 Brezová pod Bradlom
-Medzev
-Turany
-Strážske
-Nováky
-Trenčianske Teplice
-Leopoldov
-Giraltovce
-Tisovec
-Vysoké Tatry
-Spišské Podhradie
-Hanušovce nad Topľou
+Brodské
+Brvnište
+Bučany
+Budimír
+Bušince
+Bystrany
+Bytča
+Cabaj-Čápor
+Čachtice
+Čadca
+Čakajovce
+Čaklov
+Čaňa
+Častkovce
+Čechynce
+Červeník
+Chmiňany
+Chminianska Nová Ves
+Chminianske Jakubovany
+Chorvátský Grob
+Chrenovec-Brusno
+Chynorany
+Čičava
 Čierna nad Tisou
-Tlmače
-Spišské Vlachy
-Jelšava
-Podolínec
-Rajecké Teplice
-Spišská Stará Ves
-Modrý Kameň
+Čierna Voda
+Čierne
+Cífer
+Detva
+Diviacka Nová Ves
+Divinka
+Dlhé Klčovo
+Dolná Streda
+Dolná Súča
+Dolné Kočkovce
+Dolné Obdokovce
+Dolné Vestenice
+Dolný Hričov
+Dolný Kubín
+Dražkovce
+Drienov
+Družstevná pri Hornáde
+Dubnica nad Váhom
 Dudince
+Dulova Ves
+Dulovce
+Dunajov
+Dunajská Streda
+Ďurkov
+Fiľakovo
+Fintice
+Fričovce
+Galanta
+Gánovce
+Gbelany
+Geča
+Giraltovce
+Golianovo
+Hamuliakovo
+Handlová
+Hanušovce nad Topľou
+Harichovce
+Helcmanovce
+Hencovce
+Hliník
+Hliník nad Hronom
+Hlinné
+Hlohovec
+Hnúšťa
+Holíč
+Horná Streda
+Hrnčiarovce nad Parnou
+Hronské Kľačany
+Hrubá Borša
+Hrubý Šúr
+Humenné
+Huncovce
+Hurbanovo
+Hviezdoslavov
+Hvozdnica
+Ilava
+Istebné
+Ivanka pri Dunaji
+Ivanka pri Nitre
+Jablonec
+Jacovce
+Jamník
+Janovce
+Jarovce
+Jarovnice
+Jasenica
+Jaslovské Bohunice
+Jelka
+Jurské
+Kajal
+Kalinkovo
+Kamenica nad Cirochou
+Kanianka
+Kapušany
+Kavečany
+Kechnec
+Kendice
+Kežmarok
+Kľačany
+Klasov
+Kokšov-Bakša
+Kolíňany
+Komárno
+Komjatice
+Konská
+Kopčany
+Košeca
+Košice
+Košické Olšany
+Košťany nad Turcom
+Košúty
+Kováčová
+Kračúnovce
+Kráľová nad Váhom
+Kráľovce
+Kráľovský Chlmec
+Krásno nad Kysucou
+Krásnohorské Podhradie
+Kremnica
+Kriváň
+Krížová Ves
+Krížovany nad Dudváhom
+Krompachy
+Krušovce
+Kútniky
+Kúty
+Kvetoslavov
+Kysak
+Kysucké Nové Mesto
+Kysucký Lieskovec
+Ladce
+Lazany
+Lednické Rovne
+Lehnice
+Lehota
+Lemešany
+Lendak
+Leopoldov
+Levice
+Levoča
+Lietava
+Lietavská Lúčka
+Likavka
+Lipany
+Liptovský Hrádok
+Liptovský Mikuláš
+Liptovský Svätý Peter
+Lisková
+Lubeník
+Ľubotice
+Lučenec
+Ludanice
+Ludrová
+Lužianky
+Machulince
+Madunice
+Majcichov
+Malá Ida
+Malachov
+Malacky
+Malé Dvorníky
+Malinovo
+Malý Lapáš
+Malý Šariš
+Malý Slavkov
+Malý Slivník
+Marianka
+Markovce
+Markušovce
+Martin
+Matúškovo
+Medzev
+Medzilaborce
+Michaľany
+Michalovce
+Miloslavov
+Mirkovce
+Modra
+Mojmírovce
+Mojš
+Mojzesovo
+Moldava nad Bodvou
+Moravany nad Váhom
+Myjava
+Nacina Ves
+Námestovo
+Nededza
+Nemčice
+Nemšová
+Nesluša
+Nitra
+Nitrianske Hrnčiarovce
+Nitrianske Rudno
+Nižná
+Nižná Myšľa
+Nižný Hrabovec
+Nová Baňa
+Nová Dubnica
+Nová Lesná
+Nová ľubovňa
+Nová Ves nad Žitavou
+Nováky
+Nové Mesto nad Váhom
+Nové Zámky
+Opatovce nad Nitrou
+Opoj
+Ostrovany
+Partizánske
+Pavlovce nad Uhom
+Pečovská Nová Ves
+Petrovany
+Petržalka
+Pezinok
+Piešťany
+Pobedim
+Podbrezová
+Podhorany
+Podolie
+Podtureň
+Podvysoká
+Pohronský Ruskov
+Poltár
+Poprad
+Považská Bystrica
+Pravenec
+Predmier
+Preseľany
+Prešov
+Príbovce
+Prievidza
+Pruské
+Púchov
+Rabča
+Radola
+Rajec
+Rajecké Teplice
+Raková
+Rakúsy
+Ratnovce
+Ražňany
+Reca
+Revúca
+Richnava
+Rimavská Seč
+Rimavská Sobota
+Rišňovce
+Rosina
+Rovinka
+Rozhanovce
+Rožňava
+Rudňany
+Ružindol
+Ružomberok
+Rybany
+Sabinov
+Šaca
+Sačurov
+Šahy
+Šaľa
+Šamorín
+Šarišské Dravce
+Šarišské Michal’any
+Sebedražie
+Sečovce
+Sečovská Polianka
+Sedliská
+Senec
+Senica
+Sered’
+Sihelné
+Šintava
+Skalica
+Skalité
+Sládkovičovo
+Slavošovce
+Sliač
+Slovenský Grob
+Smolenice
+Snežnica
+Snina
+Soblahov
+Sobrance
+Sokoľany
+Sokolovce
+Soľ
+Solčany
+Šoporňa
+Špačince
+Spišská Belá
+Spišská Nová Ves
+Spišská Stará Ves
+Spišské Podhradie
+Spišské Tomášovce
+Spišský Hrhov
+Spišský Štiavnik
+Spišský Štvrtok
+Stará Ľubovňa
+Stará Turá
+Starý Tekov
+Staškov
+Stožok
+Stráňavy
+Stráne pod Tatrami
+Strážske
+Strečno
+Stropkov
+Stupava
+Štúrovo
+Štvrtok na Ostrove
+Sučany
+Suchá nad Parnou
+Šurany
+Švábovce
+Svätý Jur
+Sverepec
+Svidník
+Svinia
+Svinná
+Svit
+Svrčinovec
+Teplička nad Váhom
+Tešedíkovo
+Tlmače
+Tomášov
+Topoľčany
+Tornaľa
+Torysa
+Tovarníky
+Trakovice
+Trebatice
+Trebišov
+Trenčianska Teplá
+Trenčianska Turná
+Trenčianske Teplice
+Trenčín
+Trhovište
+Trnava
+Trstené pri Hornáde
+Trstice
+Turčianske Teplice
+Tureň
+Turna nad Bodvou
+Turzovka
+Tvrdošín
+Úľany nad Žitavou
+Urmince
+Váhovce
+Valaliky
+Varhaňovce
+Varín
+Vavrečka
+Vechec
+Veľká Ida
+Veľká Lomnica
+Veľká Mača
+Veľké Brestovany
+Veľké Čaníkovce
+Veľké Dvorníky
+Veľké Kapušany
+Veľké Kostoľany
+Veľké Leváre
+Veľké Orvište
+Veľké Šúrovce
+Veľké Trakany
+Veľké Úľany
+Veľké Zálužie
+Veľký Biel
+Veľký Krtíš
+Veľký Kýr
+Veľký Lapáš
+Veľký Meder
+Veľký Šariš
+Veľký Slavkov
+Vidiná
+Viničné
+Vlkanová
+Vojčice
+Vráble
+Vranov nad Topľou
+Vŕbnica
+Vrbové
+Vrútky
+Vtáčkovce
+Výborná
+Výčapy-Opatovce
+Vydrany
+Vydrník
+Vyšná Šebastová
+Vyšné Raslavice
+Vyšný Žipov
+Žabokreky
+Žabokreky nad Nitrou
+Záborské
+Záhradné
+Zákamenné
+Zamarovce
+Žarnovica
+Zavar
+Zbehy
+Zborov
+Zborov nad Bystricou
+Ždaňa
+Žehra
+Zeleneč
+Želiezovce
+Zemianske Kostoľany
+Žiar nad Hronom
+Žilina
+Zlaté Moravce
+Zubrohlava
+Župčany
+Zvolen
+Zvolenské Nemce
