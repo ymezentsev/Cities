@@ -1,4 +1,4 @@
-﻿package gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,10 +36,10 @@ public class MainWindow {
         countdownLabelGbc.gridx = 0;
         countdownLabelGbc.gridy = 0;
         countdownLabelGbc.gridwidth = 2;
-        countdownLabelGbc.anchor = GridBagConstraints.CENTER;
+        // countdownLabelGbc.anchor = GridBagConstraints.CENTER;
         JLabel countdownLabel = new JLabel(countdown);
-        countdownLabel.setFont(new Font("Arial", Font.PLAIN, 18));
-        countdownLabelGbc.insets = new Insets(50, 0, -40, 0);
+        countdownLabel.setFont(new Font("Arial", Font.BOLD, 30));
+      //  countdownLabelGbc.insets = new Insets(50, 0, -40, 0);
         contentPane.add(countdownLabel, countdownLabelGbc);
 
         GridBagConstraints contentPaneGbc = new GridBagConstraints();
