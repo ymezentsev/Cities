@@ -19,19 +19,22 @@ public class DifficultyLevelTimer {
     }
 
     public void drawTimer(JLabel label) {
-        if (difficultyLevel.getTime() == 0) {
+        if (difficultyLevel == DifficultyLevel.EASY) {
             return;
         }
 
-        for (int i = difficultyLevel.getTime(); i >= 1; i--) {
-            if (i > 5) {
+        for (int counter = difficultyLevel.getTimeForAnswer(); counter >= 1; counter--) {
+            if (counter > 5) {
                 label.setForeground(Color.BLUE);
             } else {
                 label.setForeground(Color.RED);
             }
+            //перенести в main window
             Font font = new Font("Arial", Font.BOLD, 30);
             label.setFont(font);
-            label.setText(Integer.toString(i));
+
+            label.setText(Integer.toString(counter));
+            System.out.println(counter);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -40,7 +43,7 @@ public class DifficultyLevelTimer {
 
             // в случае правильного ответа запустить счетчик сначала
             if (isAnswerRight) {
-                i = difficultyLevel.getTime();
+                counter = difficultyLevel.getTimeForAnswer();
                 isAnswerRight = false;
             }
         }

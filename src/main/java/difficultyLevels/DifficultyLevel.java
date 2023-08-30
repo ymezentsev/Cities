@@ -1,20 +1,20 @@
 package difficultyLevels;
 
 public enum DifficultyLevel {
-    EASY(22),
+    EASY(0),
     MEDIUM(40),
     HARD(20);
-    private int time;
+    private int timeForAnswer;
 
-    DifficultyLevel(int time) {
-        this.time = time;
+    DifficultyLevel(int timeForAnswer) {
+        this.timeForAnswer = timeForAnswer;
     }
 
-    public int getTime() {
-        return time;
+    public int getTimeForAnswer() {
+        return timeForAnswer;
     }
 
-    public void setTime(int time) {
-        this.time = time;
+    public void setTimeForAnswer(int timeForAnswer) {
+        this.timeForAnswer = timeForAnswer;
     }
 }

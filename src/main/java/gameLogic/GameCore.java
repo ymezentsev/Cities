@@ -1,20 +1,22 @@
 package gameLogic;
 
+import databaseReader.FileReaderImpl;
+import databaseReader.Reader;
 import difficultyLevels.DifficultyLevel;
 import difficultyLevels.DifficultyLevelTimer;
 import exceptions.CityNameException;
 import exceptions.CityNameValidator;
-import databaseReader.FileReaderImpl;
-import databaseReader.Reader;
 import gui.ExitWindow;
+import gui.HighScoresWindow;
+import gui.WelcomeWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
-import languages.LanguageSelector;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameCore {
     private ResourceBundle resourceBundle;
@@ -53,7 +55,7 @@ public class GameCore {
         cities = reader.readCitiesToList(fileName);
         countUserStep = 0;
 
-        //замінити на створення головного вікна
+  //замінити на створення головного вікна
         JFrame mainWindow = new JFrame("Main Window");
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainWindow.setPreferredSize(new Dimension(450, 200));
@@ -62,7 +64,7 @@ public class GameCore {
         JLabel text1 = new JLabel();
         text1.setHorizontalAlignment(JLabel.CENTER);
 
-        JButton button = new JButton("кнопка");
+        JButton button = new JButton("сброс лічильника");
         button.addActionListener(e -> {
             difficultyLevelTimer.setAnswerRight(true);
         });
@@ -75,14 +77,16 @@ public class GameCore {
         mainWindow.setLocationRelativeTo(null);
         mainWindow.setVisible(true);
 
+
+        gameLoop(mainWindow, text1);
+    }
+
+    private void gameLoop(JFrame mainWindow, JLabel text1) {
         //start levels timer
         Thread thread1 = new Thread(() -> difficultyLevelTimer.drawTimer(text1));
         thread1.start();
         //
-        gameLoop(mainWindow);
-    }
 
-    private void gameLoop(JFrame mainWindow) {
         String lastComputerCity = null;
         List<String> usedCities = new ArrayList<>();
 
@@ -177,11 +181,12 @@ public class GameCore {
 
     private String getRandomCity(char firstChar, JFrame mainWindow) {
         List<String> suitableCities = new ArrayList<>();
-        for (String city : cities) {
+        suitableCities = cities.stream().filter((city) -> city.charAt(0) == firstChar).collect(Collectors.toList());
+      /*  for (String city : cities) {
             if (city.charAt(0) == firstChar) {
                 suitableCities.add(city);
             }
-        }
+        }*/
 
         if (suitableCities.size() == 0) {
             return "computerLostOut";
