@@ -1,9 +1,12 @@
 package gui;
 
+import difficultyLevels.DifficultyLevel;
 import gameLogic.GameCore;
 import languages.LanguageSelector;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,7 +19,12 @@ public class WelcomeWindow {
     private final String welcomeText1;
     private final String welcomeText2;
     private final String welcomeText3;
+    private final String easyRadioButtonName;
+    private final String mediumRadioButtonName;
+    private final String hardRadioButtonName;
+    private final String radioButtonsTitle;
     private boolean repeatGame;
+    private DifficultyLevel difficultyLevel;
 
     //called when the program started at first
     public WelcomeWindow() {
@@ -25,6 +33,11 @@ public class WelcomeWindow {
         this.welcomeText2 = "To continue, enter your name";
         this.welcomeText3 = "and select the country of which cities you want to play";
         this.repeatGame = false;
+        this.easyRadioButtonName = "Easy";
+        this.mediumRadioButtonName = "Medium";
+        this.hardRadioButtonName = "Hard";
+        this.radioButtonsTitle = "Level";
+        this.difficultyLevel = DifficultyLevel.EASY;
     }
 
     //called when the user wants to play again
@@ -36,6 +49,11 @@ public class WelcomeWindow {
         this.welcomeText1 = resourceBundle.getString("repeatGameText") + ", " + userName + "?";
         this.welcomeText2 = resourceBundle.getString("welcomeText2");
         this.welcomeText3 = "";
+        this.easyRadioButtonName = resourceBundle.getString("easyRadioButtonName");
+        this.mediumRadioButtonName = resourceBundle.getString("mediumRadioButtonName");
+        this.hardRadioButtonName = resourceBundle.getString("hardRadioButtonName");
+        this.radioButtonsTitle = resourceBundle.getString("radioButtonsTitle");
+        this.difficultyLevel = DifficultyLevel.EASY;
     }
 
     //draw welcome window
@@ -45,7 +63,7 @@ public class WelcomeWindow {
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(450, 200));
+        frame.setPreferredSize(new Dimension(490, 275));
 
         createGUI(frame);
 
@@ -60,7 +78,6 @@ public class WelcomeWindow {
         GridBagLayout gridBagLayout = new GridBagLayout();
         panel.setLayout(gridBagLayout);
 
-
         JLabel text1 = new JLabel(welcomeText1);
         text1.setHorizontalAlignment(JLabel.CENTER);
         Font font = new Font("Arial", Font.BOLD, 16);
@@ -72,12 +89,44 @@ public class WelcomeWindow {
         JLabel text3 = new JLabel(welcomeText3);
         text3.setHorizontalAlignment(JLabel.CENTER);
 
+        JRadioButton easyRadioButton = new JRadioButton(easyRadioButtonName, true);
+        JRadioButton mediumRadioButton = new JRadioButton(mediumRadioButtonName);
+        JRadioButton hardRadioButton = new JRadioButton(hardRadioButtonName);
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(easyRadioButton);
+        buttonGroup.add(mediumRadioButton);
+        buttonGroup.add(hardRadioButton);
+
+        easyRadioButton.addItemListener(e -> {
+            difficultyLevel = DifficultyLevel.EASY;
+        });
+        mediumRadioButton.addItemListener(e -> {
+            difficultyLevel = DifficultyLevel.MEDIUM;
+        });
+        hardRadioButton.addItemListener(e -> {
+            difficultyLevel = DifficultyLevel.HARD;
+        });
+
+        JPanel radioButtonPanel = new JPanel();
+        radioButtonPanel.add(easyRadioButton);
+        radioButtonPanel.add(mediumRadioButton);
+        radioButtonPanel.add(hardRadioButton);
+        Border border = BorderFactory.createEtchedBorder();
+        Border borderTitle = BorderFactory.createTitledBorder(border, radioButtonsTitle, TitledBorder.CENTER, TitledBorder.CENTER);
+        radioButtonPanel.setBorder(borderTitle);
+
         JButton uaButton = getButton("Міста України",
                 "src/main/resources/images/ua_flag.png", "uk", "UA", frame);
         JButton gbButton = getButton("Great Britain cities",
                 "src/main/resources/images/gb_flag.png", "en", "UK", frame);
         JButton svkButton = getButton("Mestá Slovenska",
                 "src/main/resources/images/svk_flag.png", "sk", "SK", frame);
+        JButton deButton = getButton("Städte Deutschlands",
+                "src/main/resources/images/de_flag.png", "de", "DE", frame);
+        JButton frButton = getButton("Villes de France",
+                "src/main/resources/images/fr_flag.png", "fr", "FR", frame);
+        JButton esButton = getButton("Ciudades de España",
+                "src/main/resources/images/es_flag.png", "es", "ES", frame);
 
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JLabel.CENTER);
@@ -87,6 +136,9 @@ public class WelcomeWindow {
                 uaButton.setEnabled(true);
                 gbButton.setEnabled(true);
                 svkButton.setEnabled(true);
+                deButton.setEnabled(true);
+                frButton.setEnabled(true);
+                esButton.setEnabled(true);
             }
         });
 
@@ -123,11 +175,12 @@ public class WelcomeWindow {
         gbc.gridwidth = 1;
         panel.add(textField, gbc);
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.CENTER;
+        gbc.ipady = -2;
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 3;
-        panel.add(new JLabel(" "), gbc);
+        panel.add(radioButtonPanel, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -145,10 +198,29 @@ public class WelcomeWindow {
         gbc.gridwidth = 1;
         panel.add(svkButton, gbc);
 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        panel.add(deButton, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        panel.add(frButton, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 7;
+        gbc.gridwidth = 1;
+        panel.add(esButton, gbc);
+
         if (repeatGame) {
             uaButton.setEnabled(true);
             gbButton.setEnabled(true);
             svkButton.setEnabled(true);
+            deButton.setEnabled(true);
+            frButton.setEnabled(true);
+            esButton.setEnabled(true);
             textField.setVisible(false);
         }
 
@@ -162,7 +234,7 @@ public class WelcomeWindow {
         JButton button = new JButton(textButton, icon);
         button.setVerticalTextPosition(AbstractButton.BOTTOM);
         button.setHorizontalTextPosition(AbstractButton.CENTER);
-        button.setPreferredSize(new Dimension(140, 45));
+        button.setPreferredSize(new Dimension(155, 45));
         button.setEnabled(false);
 
         button.addActionListener(e -> {
@@ -172,9 +244,9 @@ public class WelcomeWindow {
             } else {
                 frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
-                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName);            }
+                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName, difficultyLevel);
+            }
         });
-
         return button;
     }
 

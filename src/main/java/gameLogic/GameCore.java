@@ -1,5 +1,6 @@
 package gameLogic;
 
+import difficultyLevels.DifficultyLevel;
 import exceptions.CityNameException;
 import exceptions.CityNameValidator;
 import databaseReader.FileReaderImpl;
@@ -17,6 +18,7 @@ public class GameCore {
     private ResourceBundle resourceBundle;
     private String userName;
     private String fileName;
+    private DifficultyLevel difficultyLevel;
     private final String exitWord;
     private final String errorFirstLetter;
     private final String errorCity;
@@ -24,13 +26,14 @@ public class GameCore {
     private final String repeatCity;
     private final String lastLetterMessageTitle;
     private final String lastLetterException;
-    static Set<String> cities;  // зробити нестатичним
+    private Set<String> cities;
     private final Reader reader;
     private int countUserStep;
 
-    public GameCore(ResourceBundle resourceBundle, String userName) {
+    public GameCore(ResourceBundle resourceBundle, String userName, DifficultyLevel difficultyLevel) {
         this.resourceBundle = resourceBundle;
         this.userName = userName;
+        this.difficultyLevel = difficultyLevel;
         fileName = resourceBundle.getString("fileName");
         exitWord = resourceBundle.getString("exitWord");
         errorTitle = resourceBundle.getString("errorTitle");
