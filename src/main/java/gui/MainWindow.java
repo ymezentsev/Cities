@@ -1,26 +1,31 @@
 package gui;
 
+import difficultyLevels.DifficultyLevelTimer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ResourceBundle;
 
-public class MainWindow {
+public class MainWindow extends JFrame{
     private ResourceBundle resourceBundle;
-    private String userName;
+    private JLabel timerLabel;
     private String makeMove;
     private String inputLabelText;
     private String computerLabelText;
-    private String countdown;
+    private DifficultyLevelTimer difficultyLevelTimer;
 
-    public MainWindow(ResourceBundle resourceBundle, String userName) {
+    public MainWindow(ResourceBundle resourceBundle, DifficultyLevelTimer difficultyLevelTimer) {
         this.resourceBundle = resourceBundle;
-        this.userName = userName;
+        this.difficultyLevelTimer = difficultyLevelTimer;
         this.makeMove = resourceBundle.getString("makeMove");
         this.inputLabelText = resourceBundle.getString("inputLabel");
         this.computerLabelText = resourceBundle.getString("computerLabel");
-        this.countdown = resourceBundle.getString("countdown");
         createAndShowGUI();
+  }
+
+    public JLabel getTimerLabel() {
+        return timerLabel;
     }
 
     private void createAndShowGUI() {
@@ -29,18 +34,19 @@ public class MainWindow {
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
-        JPanel contentPane = new JPanel(new GridBagLayout());
-        frame.setContentPane(contentPane);
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        frame.setContentPane(contentPanel);
 
         GridBagConstraints countdownLabelGbc = new GridBagConstraints();
         countdownLabelGbc.gridx = 0;
         countdownLabelGbc.gridy = 0;
         countdownLabelGbc.gridwidth = 2;
         // countdownLabelGbc.anchor = GridBagConstraints.CENTER;
-        JLabel countdownLabel = new JLabel(countdown);
-        countdownLabel.setFont(new Font("Arial", Font.BOLD, 30));
-      //  countdownLabelGbc.insets = new Insets(50, 0, -40, 0);
-        contentPane.add(countdownLabel, countdownLabelGbc);
+        timerLabel = new JLabel("  ");
+        timerLabel.setForeground(Color.BLUE);
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        //  countdownLabelGbc.insets = new Insets(50, 0, -40, 0);
+        contentPanel.add(timerLabel, countdownLabelGbc);
 
         GridBagConstraints contentPaneGbc = new GridBagConstraints();
         contentPaneGbc.gridx = 0;
@@ -50,7 +56,7 @@ public class MainWindow {
         contentPaneGbc.weighty = 1.0;
 
         JPanel leftPanel = createInputAndButtonPanel();
-        contentPane.add(leftPanel, contentPaneGbc);
+        contentPanel.add(leftPanel, contentPaneGbc);
 
         GridBagConstraints rightPanelGbc = new GridBagConstraints();
         rightPanelGbc.gridx = 1;
@@ -60,7 +66,7 @@ public class MainWindow {
         rightPanelGbc.weighty = 1.0;
 
         JPanel rightPanel = createLabelPanel();
-        contentPane.add(rightPanel, rightPanelGbc);
+        contentPanel.add(rightPanel, rightPanelGbc);
 
         frame.setJMenuBar(createMenuBar());
         frame.pack();
@@ -86,6 +92,9 @@ public class MainWindow {
         gbc.anchor = GridBagConstraints.CENTER;
         button.setPreferredSize(new Dimension(189, 40));
         inputAndButtonPanel.add(button, gbc);
+        button.addActionListener(e -> {
+            difficultyLevelTimer.setAnswerRight(true);
+        });
 
         return inputAndButtonPanel;
     }

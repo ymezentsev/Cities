@@ -8,6 +8,7 @@ import exceptions.CityNameException;
 import exceptions.CityNameValidator;
 import gui.ExitWindow;
 import gui.HighScoresWindow;
+import gui.MainWindow;
 import gui.WelcomeWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
@@ -25,6 +26,7 @@ public class GameCore {
     private DifficultyLevel difficultyLevel;
     private DifficultyLevelTimer difficultyLevelTimer;
     private boolean timeOut;
+    private GameLogic gameLogic;
     private final String exitWord;
     private final String errorFirstLetter;
     private final String errorCity;
@@ -40,8 +42,13 @@ public class GameCore {
         this.resourceBundle = resourceBundle;
         this.userName = userName;
         this.difficultyLevel = difficultyLevel;
-        this.timeOut = false;
-        this.difficultyLevelTimer = new DifficultyLevelTimer(difficultyLevel, timeOut);
+
+        //замінити на створення головного вікна
+       // MainWindow mainWindow = new MainWindow(resourceBundle);
+
+        this.gameLogic = new GameLogic(resourceBundle, userName);
+       //this.difficultyLevelTimer = new DifficultyLevelTimer(difficultyLevel);
+
         fileName = resourceBundle.getString("fileName");
         exitWord = resourceBundle.getString("exitWord");
         errorTitle = resourceBundle.getString("errorTitle");
@@ -55,38 +62,14 @@ public class GameCore {
         cities = reader.readCitiesToList(fileName);
         countUserStep = 0;
 
-  //замінити на створення головного вікна
-        JFrame mainWindow = new JFrame("Main Window");
-        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainWindow.setPreferredSize(new Dimension(450, 200));
-
-        JPanel panel = new JPanel();
-        JLabel text1 = new JLabel();
-        text1.setHorizontalAlignment(JLabel.CENTER);
-
-        JButton button = new JButton("сброс лічильника");
-        button.addActionListener(e -> {
-            difficultyLevelTimer.setAnswerRight(true);
-        });
-
-        panel.add(text1);
-        panel.add(button);
-        mainWindow.getContentPane().add(panel, BorderLayout.CENTER);
-
-        mainWindow.pack();
-        mainWindow.setLocationRelativeTo(null);
-        mainWindow.setVisible(true);
+       // Thread thread1 = new Thread(() -> difficultyLevelTimer.isTimeOut(mainWindow.getTimerLabel()));
+       // thread1.start();
 
 
-        gameLoop(mainWindow, text1);
+       // gameLoop(mainWindow);
     }
 
-    private void gameLoop(JFrame mainWindow, JLabel text1) {
-        //start levels timer
-        Thread thread1 = new Thread(() -> difficultyLevelTimer.drawTimer(text1));
-        thread1.start();
-        //
-
+    private void gameLoop(JFrame mainWindow) {
         String lastComputerCity = null;
         List<String> usedCities = new ArrayList<>();
 
@@ -99,13 +82,7 @@ public class GameCore {
 
             //check the exit word
             if (inputCity.equalsIgnoreCase(exitWord) || timeOut) {
-                //record the result of the game in the table of the best results
-                ScoreEntry newScoreEntry = new ScoreEntry(userName, countUserStep);
-                HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
-                highScoresProcessor.processNewEntry(newScoreEntry);
-                //open exit window
-                ExitWindow exitWindow = new ExitWindow(resourceBundle, mainWindow, false,
-                        new ScoreEntry(userName, countUserStep));
+              //  gameLogic.endGame(countUserStep, false);
                 break;
             }
 

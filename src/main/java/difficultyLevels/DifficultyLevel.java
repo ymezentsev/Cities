@@ -2,8 +2,8 @@ package difficultyLevels;
 
 public enum DifficultyLevel {
     EASY(0),
-    MEDIUM(40),
-    HARD(20);
+    MEDIUM(10),
+    HARD(10);
     private int timeForAnswer;
 
     DifficultyLevel(int timeForAnswer) {

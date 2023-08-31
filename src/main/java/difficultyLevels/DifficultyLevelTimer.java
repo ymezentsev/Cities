@@ -1,16 +1,18 @@
 package difficultyLevels;
 
+import gameLogic.GameLogic;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class DifficultyLevelTimer {
     private DifficultyLevel difficultyLevel;
+    private GameLogic gameLogic;
     private boolean isAnswerRight;
-    private boolean timeOut;
 
-    public DifficultyLevelTimer(DifficultyLevel difficultyLevel, boolean timeOut) {
+    public DifficultyLevelTimer(DifficultyLevel difficultyLevel, GameLogic gameLogic) {
         this.difficultyLevel = difficultyLevel;
-        this.timeOut = timeOut;
+        this.gameLogic = gameLogic;
         isAnswerRight = false;
     }
 
@@ -18,35 +20,30 @@ public class DifficultyLevelTimer {
         this.isAnswerRight = isAnswerRight;
     }
 
-    public void drawTimer(JLabel label) {
+    public void timer(JLabel label) {
         if (difficultyLevel == DifficultyLevel.EASY) {
             return;
         }
 
-        for (int counter = difficultyLevel.getTimeForAnswer(); counter >= 1; counter--) {
-            if (counter > 5) {
-                label.setForeground(Color.BLUE);
-            } else {
+        for (int counter = difficultyLevel.getTimeForAnswer(); counter >= 0; counter--) {
+            if (counter < 5) {
                 label.setForeground(Color.RED);
             }
-            //перенести в main window
-            Font font = new Font("Arial", Font.BOLD, 30);
-            label.setFont(font);
-
             label.setText(Integer.toString(counter));
-            System.out.println(counter);
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
-            // в случае правильного ответа запустить счетчик сначала
+            //if user's answer correct start timer again
             if (isAnswerRight) {
-                counter = difficultyLevel.getTimeForAnswer();
+                counter = difficultyLevel.getTimeForAnswer() + 1;
                 isAnswerRight = false;
             }
         }
-        timeOut = true;
+        //if timer value = 0 user lost
+        gameLogic.endGame(gameLogic.getCountUserStep(), false);
     }
 }
