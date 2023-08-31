@@ -15,6 +15,7 @@ public class MainWindow extends JFrame {
     private JLabel timerLabel;
     private JTextField inputField;
     private JLabel computerLabel;
+    private JFrame frame;
     private String makeMove;
     private String inputLabelText;
     private String computerLabelText;
@@ -40,8 +41,12 @@ public class MainWindow extends JFrame {
         return computerLabel;
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
     private void showWindow() {
-        JFrame frame = new JFrame(resourceBundle.getString("title"));
+        frame = new JFrame(resourceBundle.getString("title"));
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 

@@ -3,6 +3,7 @@ package gameLogic;
 import exceptions.CityNameException;
 import exceptions.CityNameValidator;
 import gui.ExitWindow;
+import gui.MainWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 public class GameLogic {
     private ResourceBundle resourceBundle;
     private String userName;
-    private JFrame mainWindow;
+    private MainWindow mainWindow;
     private int countUserStep;
     private String lastComputerCity;
     // private String inputCity;
@@ -50,7 +51,7 @@ public class GameLogic {
         return countUserStep;
     }
 
-    public void setMainWindow(JFrame mainWindow) {
+    public void setMainWindow(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
     }
 
@@ -64,7 +65,7 @@ public class GameLogic {
         HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
         highScoresProcessor.processNewEntry(newScoreEntry);
         //open exit window
-        ExitWindow exitWindow = new ExitWindow(resourceBundle, mainWindow, isUserWin,
+        ExitWindow exitWindow = new ExitWindow(resourceBundle, mainWindow.getFrame(), isUserWin,
                 new ScoreEntry(userName, countUserStep));
     }
 
