@@ -4,7 +4,7 @@ d 7
 d 7
 fdf 6
 fdf 6
-user1 2
-1 1
-d 1
-d 1
+ва 5
+ва 5
+df 5
+df 5

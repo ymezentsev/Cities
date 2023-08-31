@@ -26,8 +26,10 @@ public class DifficultyLevelTimer {
         }
 
         for (int counter = difficultyLevel.getTimeForAnswer(); counter >= 0; counter--) {
-            if (counter < 5) {
+            if (counter <= 5) {
                 label.setForeground(Color.RED);
+            } else {
+                label.setForeground(Color.BLUE);
             }
             label.setText(Integer.toString(counter));
 

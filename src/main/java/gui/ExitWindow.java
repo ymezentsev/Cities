@@ -60,10 +60,7 @@ public class ExitWindow {
 
         JButton exitButton = new JButton(btnExit);
         exitButton.addActionListener(e -> {
-            dialog.dispose();
-            //для тесту, замінити на System.exit(0)
-            new HighScoresWindow(resourceBundle, newScoreEntry).showWindow();
-            // System.exit(0);
+            System.exit(0);
         });
 
 

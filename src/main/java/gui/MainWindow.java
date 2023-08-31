@@ -1,128 +1,144 @@
 package gui;
 
 import difficultyLevels.DifficultyLevelTimer;
+import gameLogic.GameLogic;
+import highscores.ScoreEntry;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
 import java.util.ResourceBundle;
 
-public class MainWindow extends JFrame{
+public class MainWindow extends JFrame {
     private ResourceBundle resourceBundle;
     private JLabel timerLabel;
+    private JTextField inputField;
+    private JLabel computerLabel;
     private String makeMove;
     private String inputLabelText;
     private String computerLabelText;
     private DifficultyLevelTimer difficultyLevelTimer;
+    private GameLogic gameLogic;
+    // private String inputCity;
 
-    public MainWindow(ResourceBundle resourceBundle, DifficultyLevelTimer difficultyLevelTimer) {
+    public MainWindow(ResourceBundle resourceBundle, DifficultyLevelTimer difficultyLevelTimer, GameLogic gameLogic) {
         this.resourceBundle = resourceBundle;
         this.difficultyLevelTimer = difficultyLevelTimer;
+        this.gameLogic = gameLogic;
         this.makeMove = resourceBundle.getString("makeMove");
         this.inputLabelText = resourceBundle.getString("inputLabel");
         this.computerLabelText = resourceBundle.getString("computerLabel");
-        createAndShowGUI();
-  }
+        showWindow();
+    }
 
     public JLabel getTimerLabel() {
         return timerLabel;
     }
 
-    private void createAndShowGUI() {
+    public JLabel getComputerLabel() {
+        return computerLabel;
+    }
+
+    private void showWindow() {
         JFrame frame = new JFrame(resourceBundle.getString("title"));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
-        JPanel contentPanel = new JPanel(new GridBagLayout());
-        frame.setContentPane(contentPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(400, 200));
 
-        GridBagConstraints countdownLabelGbc = new GridBagConstraints();
-        countdownLabelGbc.gridx = 0;
-        countdownLabelGbc.gridy = 0;
-        countdownLabelGbc.gridwidth = 2;
-        // countdownLabelGbc.anchor = GridBagConstraints.CENTER;
-        timerLabel = new JLabel("  ");
-        timerLabel.setForeground(Color.BLUE);
-        timerLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        //  countdownLabelGbc.insets = new Insets(50, 0, -40, 0);
-        contentPanel.add(timerLabel, countdownLabelGbc);
+        createGUI(frame);
 
-        GridBagConstraints contentPaneGbc = new GridBagConstraints();
-        contentPaneGbc.gridx = 0;
-        contentPaneGbc.gridy = 1;
-        contentPaneGbc.fill = GridBagConstraints.BOTH;
-        contentPaneGbc.weightx = 1.0;
-        contentPaneGbc.weighty = 1.0;
-
-        JPanel leftPanel = createInputAndButtonPanel();
-        contentPanel.add(leftPanel, contentPaneGbc);
-
-        GridBagConstraints rightPanelGbc = new GridBagConstraints();
-        rightPanelGbc.gridx = 1;
-        rightPanelGbc.gridy = 1;
-        rightPanelGbc.fill = GridBagConstraints.BOTH;
-        rightPanelGbc.weightx = 1.0;
-        rightPanelGbc.weighty = 1.0;
-
-        JPanel rightPanel = createLabelPanel();
-        contentPanel.add(rightPanel, rightPanelGbc);
-
-        frame.setJMenuBar(createMenuBar());
+        frame.setJMenuBar(createMenuBar(frame));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    private JPanel createInputAndButtonPanel() {
-        JPanel inputAndButtonPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+    private void createGUI(JFrame frame) {
+        JPanel contentPanel = new JPanel(new GridBagLayout());
+        GridBagLayout gridBagLayout = new GridBagLayout();
+        contentPanel.setLayout(gridBagLayout);
 
-        JTextField inputField = new JTextField();
-        inputField.setColumns(15);
-        inputField.setFont(new Font("Arial", Font.PLAIN, 20));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        inputField.setPreferredSize(new Dimension(89, 70));
-        inputAndButtonPanel.add(inputField, gbc);
+        timerLabel = new JLabel("  ", JLabel.CENTER);
+        timerLabel.setForeground(Color.BLUE);
+        timerLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        timerLabel.setPreferredSize(new Dimension(60, 30));
+        Border border = BorderFactory.createEtchedBorder();
+        timerLabel.setBorder(border);
 
-        JButton button = new JButton(makeMove);
-        gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        button.setPreferredSize(new Dimension(189, 40));
-        inputAndButtonPanel.add(button, gbc);
-        button.addActionListener(e -> {
-            difficultyLevelTimer.setAnswerRight(true);
+        inputField = new JTextField();
+        inputField.setHorizontalAlignment(JLabel.CENTER);
+        inputField.addActionListener(e -> {
+            makeMove();
         });
 
-        return inputAndButtonPanel;
-    }
-
-    private JPanel createLabelPanel() {
-        JPanel labelPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-
         JLabel inputLabel = new JLabel(inputLabelText);
-        inputLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        inputLabel.setHorizontalAlignment(JLabel.LEFT);
+
+        JButton button = new JButton(makeMove);
+        button.addActionListener(e -> {
+            makeMove();
+        });
+
+        computerLabel = new JLabel(computerLabelText);
+        computerLabel.setHorizontalAlignment(JLabel.LEFT);
+
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.CENTER;
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(0, 0, 0, 0);
-        labelPanel.add(inputLabel, gbc);
+        gbc.gridwidth = 4;
+        contentPanel.add(timerLabel, gbc);
 
-        JLabel computerLabel = new JLabel(computerLabelText);
-        computerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(40, 0, 0, 10);
-        labelPanel.add(computerLabel, gbc);
+        gbc.gridwidth = 4;
+        contentPanel.add(new JLabel(" "), gbc);
 
-        return labelPanel;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        contentPanel.add(inputField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        contentPanel.add(new JLabel("       "), gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        contentPanel.add(inputLabel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 4;
+        contentPanel.add(new JLabel(" "), gbc);
+
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        contentPanel.add(button, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        contentPanel.add(new JLabel("       "), gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        contentPanel.add(computerLabel, gbc);
+
+        frame.setContentPane(contentPanel);
     }
 
-    private JMenuBar createMenuBar() {
+    private JMenuBar createMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu helpMenu = new JMenu(resourceBundle.getString("btnHelp"));
@@ -130,13 +146,34 @@ public class MainWindow extends JFrame{
 
         JMenuItem highScoresItem = new JMenuItem(resourceBundle.getString("titleHighScores"));
         helpMenu.add(highScoresItem);
+        highScoresItem.addActionListener(e -> {
+                    //треба подумати як вивест вікно без передачі туди ScoreEntry
+                    new HighScoresWindow(resourceBundle, new ScoreEntry("test", 0)).showWindow();
+                }
+        );
 
         JMenuItem rulesItem = new JMenuItem(resourceBundle.getString("btnRules"));
         helpMenu.add(rulesItem);
+        rulesItem.addActionListener(e -> {
+                    new RulesWindow(resourceBundle).showModalDialog(frame);
+                }
+        );
 
         JMenuItem aboutItem = new JMenuItem(resourceBundle.getString("btnAbout"));
         helpMenu.add(aboutItem);
+        aboutItem.addActionListener(e -> {
+                    new AboutWindow(resourceBundle).showAboutDialog(frame);
+                }
+        );
 
         return menuBar;
+    }
+
+    private void makeMove() {
+        if (gameLogic.checks(inputField.getText().toLowerCase().trim(), getComputerLabel())) {
+            inputField.setText("");
+            difficultyLevelTimer.setAnswerRight(true);
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 package gui;
 
 import difficultyLevels.DifficultyLevel;
-import gameLogic.GameCore1;
+import gameLogic.GameCore;
 import languages.LanguageSelector;
 
 import javax.swing.*;
@@ -244,7 +244,7 @@ public class WelcomeWindow {
             } else {
                 frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
-                GameCore1 gameCore = new GameCore1(languageSelector.getResourceBundle(language, country), userName, difficultyLevel);
+                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName, difficultyLevel);
                 gameCore.startGame();
             }
         });

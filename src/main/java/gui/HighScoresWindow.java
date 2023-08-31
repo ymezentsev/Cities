@@ -58,7 +58,7 @@ public class HighScoresWindow extends JFrame {
         JButton exitButton = new JButton(btnExit);
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(exitButton, BorderLayout.SOUTH);
-        exitButton.addActionListener(e -> System.exit(0));
+        exitButton.addActionListener(e -> this.dispose());
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
         setVisible(true);
     }
