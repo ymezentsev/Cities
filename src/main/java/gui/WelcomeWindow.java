@@ -3,6 +3,7 @@ package gui;
 import difficultyLevels.DifficultyLevel;
 import gameLogic.GameCore;
 import languages.LanguageSelector;
+import languages.LanguageSettingsDAO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -10,55 +11,42 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ResourceBundle;
 
+//Show welcome window when game start
 public class WelcomeWindow {
-    private ResourceBundle resourceBundle;
-    private String userName;
-    private final String title;
+    private final LanguageSettingsDAO languageSettingsDAO;
     private final String welcomeText1;
     private final String welcomeText2;
     private final String welcomeText3;
-    private final String easyRadioButtonName;
-    private final String mediumRadioButtonName;
-    private final String hardRadioButtonName;
-    private final String radioButtonsTitle;
-    private boolean repeatGame;
+    private String userName;
+    private final boolean repeatGame;
     private DifficultyLevel difficultyLevel;
 
     //called when the program started at first
     public WelcomeWindow() {
-        this.title = "Cities of the world";
+        languageSettingsDAO = new LanguageSettingsDAO(
+                new LanguageSelector().getResourceBundle("en","UK"));
         this.welcomeText1 = "Welcome to the game \"Cities of the World\"";
         this.welcomeText2 = "To continue, enter your name";
         this.welcomeText3 = "and select the country of which cities you want to play";
         this.repeatGame = false;
-        this.easyRadioButtonName = "Easy";
-        this.mediumRadioButtonName = "Medium";
-        this.hardRadioButtonName = "Hard";
-        this.radioButtonsTitle = "Level";
         this.difficultyLevel = DifficultyLevel.EASY;
     }
 
     //called when the user wants to play again
-    public WelcomeWindow(ResourceBundle resourceBundle, String userName) {
+    public WelcomeWindow(LanguageSettingsDAO languageSettingsDAO, String userName) {
         this.repeatGame = true;
         this.userName = userName;
-        this.resourceBundle = resourceBundle;
-        this.title = resourceBundle.getString("title");
-        this.welcomeText1 = resourceBundle.getString("repeatGameText") + ", " + userName + "?";
-        this.welcomeText2 = resourceBundle.getString("welcomeText2");
+        this.languageSettingsDAO = languageSettingsDAO;
+        this.welcomeText1 = languageSettingsDAO.getRepeatGameText() + ", " + userName + "?";
+        this.welcomeText2 = languageSettingsDAO.getWelcomeText2();
         this.welcomeText3 = "";
-        this.easyRadioButtonName = resourceBundle.getString("easyRadioButtonName");
-        this.mediumRadioButtonName = resourceBundle.getString("mediumRadioButtonName");
-        this.hardRadioButtonName = resourceBundle.getString("hardRadioButtonName");
-        this.radioButtonsTitle = resourceBundle.getString("radioButtonsTitle");
         this.difficultyLevel = DifficultyLevel.EASY;
     }
 
     //draw welcome window
     public void showWindow() {
-        JFrame frame = new JFrame(title);
+        JFrame frame = new JFrame(languageSettingsDAO.getTitle());
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
@@ -72,7 +60,7 @@ public class WelcomeWindow {
         frame.setVisible(true);
     }
 
-    //window elements are drawn relative to each other
+    //draws window elements relative to each other
     private void createGUI(JFrame frame) {
         JPanel panel = new JPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
@@ -89,30 +77,25 @@ public class WelcomeWindow {
         JLabel text3 = new JLabel(welcomeText3);
         text3.setHorizontalAlignment(JLabel.CENTER);
 
-        JRadioButton easyRadioButton = new JRadioButton(easyRadioButtonName, true);
-        JRadioButton mediumRadioButton = new JRadioButton(mediumRadioButtonName);
-        JRadioButton hardRadioButton = new JRadioButton(hardRadioButtonName);
+        JRadioButton easyRadioButton = new JRadioButton(languageSettingsDAO.getEasyRadioButtonName(), true);
+        JRadioButton mediumRadioButton = new JRadioButton(languageSettingsDAO.getMediumRadioButtonName());
+        JRadioButton hardRadioButton = new JRadioButton(languageSettingsDAO.getHardRadioButtonName());
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(easyRadioButton);
         buttonGroup.add(mediumRadioButton);
         buttonGroup.add(hardRadioButton);
 
-        easyRadioButton.addItemListener(e -> {
-            difficultyLevel = DifficultyLevel.EASY;
-        });
-        mediumRadioButton.addItemListener(e -> {
-            difficultyLevel = DifficultyLevel.MEDIUM;
-        });
-        hardRadioButton.addItemListener(e -> {
-            difficultyLevel = DifficultyLevel.HARD;
-        });
+        easyRadioButton.addItemListener(e -> difficultyLevel = DifficultyLevel.EASY);
+        mediumRadioButton.addItemListener(e -> difficultyLevel = DifficultyLevel.MEDIUM);
+        hardRadioButton.addItemListener(e -> difficultyLevel = DifficultyLevel.HARD);
 
         JPanel radioButtonPanel = new JPanel();
         radioButtonPanel.add(easyRadioButton);
         radioButtonPanel.add(mediumRadioButton);
         radioButtonPanel.add(hardRadioButton);
         Border border = BorderFactory.createEtchedBorder();
-        Border borderTitle = BorderFactory.createTitledBorder(border, radioButtonsTitle, TitledBorder.CENTER, TitledBorder.CENTER);
+        Border borderTitle = BorderFactory.createTitledBorder(border, languageSettingsDAO.getRadioButtonsTitle(),
+                TitledBorder.CENTER, TitledBorder.CENTER);
         radioButtonPanel.setBorder(borderTitle);
 
         JButton uaButton = getButton("Міста України",
@@ -234,11 +217,10 @@ public class WelcomeWindow {
             worldButton.setEnabled(true);
             textField.setVisible(false);
         }
-
         frame.getContentPane().add(panel, BorderLayout.CENTER);
     }
 
-    //create button with language select
+    //create button with select of country
     private JButton getButton(String textButton, String imgPath, String language, String country, JFrame frame) {
         ImageIcon icon = resize(new ImageIcon(imgPath), 60, 25);
 
@@ -255,7 +237,8 @@ public class WelcomeWindow {
             } else {
                 frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
-                GameCore gameCore = new GameCore(languageSelector.getResourceBundle(language, country), userName, difficultyLevel);
+                LanguageSettingsDAO languageSettingsDAO = new LanguageSettingsDAO(languageSelector.getResourceBundle(language, country));
+                GameCore gameCore = new GameCore(languageSettingsDAO, userName, difficultyLevel);
                 gameCore.startGame();
             }
         });
@@ -265,7 +248,7 @@ public class WelcomeWindow {
     //icon for button resize to specified size
     private ImageIcon resize(ImageIcon image, int width, int height) {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TRANSLUCENT);
-        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        Graphics2D g2d = bi.createGraphics();
         g2d.addRenderingHints(
                 new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
         g2d.drawImage(image.getImage(), 0, 0, width, height, null);

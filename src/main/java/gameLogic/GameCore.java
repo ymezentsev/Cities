@@ -5,45 +5,42 @@ import databaseReader.Reader;
 import difficultyLevels.DifficultyLevel;
 import difficultyLevels.DifficultyLevelTimer;
 import gui.MainWindow;
+import languages.LanguageSettingsDAO;
 
-import javax.swing.*;
-import java.util.ResourceBundle;
 import java.util.Set;
 
 public class GameCore {
-    private ResourceBundle resourceBundle;
-    private String userName;
-    private DifficultyLevel difficultyLevel;
+    private final LanguageSettingsDAO languageSettingsDAO;
+    private final String userName;
+    private final DifficultyLevel difficultyLevel;
     private DifficultyLevelTimer difficultyLevelTimer;
-    private GameLogic gameLogic;
     private MainWindow mainWindow;
-    private Reader reader;
-    private Set<String> cities;
-    private String fileName;
 
-    public GameCore(ResourceBundle resourceBundle, String userName, DifficultyLevel difficultyLevel) {
-        this.resourceBundle = resourceBundle;
+    public GameCore(LanguageSettingsDAO languageSettingsDAO, String userName, DifficultyLevel difficultyLevel) {
+        this.languageSettingsDAO = languageSettingsDAO;
         this.userName = userName;
         this.difficultyLevel = difficultyLevel;
-        this.fileName = resourceBundle.getString("fileName");
-   }
+    }
 
     public void startGame() {
-        gameLogic = new GameLogic(resourceBundle, userName);
-        this.difficultyLevelTimer = new DifficultyLevelTimer(difficultyLevel, gameLogic);
+        //set values to gameLogic and mainWindow classes
+        GameLogic gameLogic = new GameLogic(languageSettingsDAO, userName);
+        difficultyLevelTimer = new DifficultyLevelTimer(difficultyLevel, gameLogic);
 
-        mainWindow = new MainWindow(resourceBundle, difficultyLevelTimer, gameLogic);
+        mainWindow = new MainWindow(languageSettingsDAO, difficultyLevelTimer, gameLogic);
         gameLogic.setMainWindow(mainWindow);
+        gameLogic.setDifficultyLevelTimer(difficultyLevelTimer);
 
         //fill cities database
-        reader = new FileReaderImpl();
-        cities = reader.readCitiesToList(fileName);
+        Reader reader = new FileReaderImpl();
+        Set<String> cities = reader.readCitiesToList(languageSettingsDAO.getFileName());
         gameLogic.setCities(cities);
 
-        startThreadWithTimer(mainWindow.getTimerLabel());
+        //start thread with difficulty level timer
+        startThreadWithTimer();
   }
 
-    private void startThreadWithTimer(JLabel timerLabel) {
+    private void startThreadWithTimer() {
         Thread thread1 = new Thread(() -> difficultyLevelTimer.timer(mainWindow.getTimerLabel()));
         thread1.start();
     }

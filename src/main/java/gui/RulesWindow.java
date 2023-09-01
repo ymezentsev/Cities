@@ -1,33 +1,28 @@
 package gui;
 
+import languages.LanguageSettingsDAO;
+import lombok.AllArgsConstructor;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ResourceBundle;
 
-//Contains rules for "Cities" game.
+//Contains rules for "Cities of the world" game
+@AllArgsConstructor
 public class RulesWindow {
-    private final String btnOk;
-    private final String txtRules;
-    private final String titleRules;
-    public RulesWindow(ResourceBundle resourceBundle){
-        this.txtRules = resourceBundle.getString("txtRules");
-        this.btnOk = resourceBundle.getString("btnOk");
-        this.titleRules = resourceBundle.getString("titleRules");
-
-    }
+    private final LanguageSettingsDAO languageSettingsDAO;
 
     public void showModalDialog(JFrame parentFrame) {
-        JDialog dialog = new JDialog(parentFrame, titleRules, true);
+        JDialog dialog = new JDialog(parentFrame, languageSettingsDAO.getTitleRules(), true);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         dialog.setSize(500, 300);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        JTextArea textArea = new JTextArea(txtRules);
+        JTextArea textArea = new JTextArea(languageSettingsDAO.getTxtRules());
         textArea.setEditable(false);
 
-        JButton closeButton = new JButton(btnOk);
+        JButton closeButton = new JButton(languageSettingsDAO.getBtnOk());
         closeButton.addActionListener(e -> dialog.dispose());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(closeButton);

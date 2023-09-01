@@ -1,37 +1,23 @@
 package gui;
 
 import highscores.ScoreEntry;
+import languages.LanguageSettingsDAO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ResourceBundle;
 
 //This window shows on "end game" program state.
-
 public class ExitWindow {
-    private final ResourceBundle resourceBundle;
-    private final String btnExit;
-    private final String btnNewGame;
-    private final String lblResultWin;
-    private final String lblResultLoose;
-    private final String titleResult;
-    private final String lblScore;
+    private final LanguageSettingsDAO languageSettingsDAO;
 
-    public ExitWindow(ResourceBundle resourceBundle, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
-        //current game winner
-        this.resourceBundle = resourceBundle;
-        this.btnExit = resourceBundle.getString("btnExit");
-        this.btnNewGame = resourceBundle.getString("btnNewGame");
-        this.lblResultWin = resourceBundle.getString("lblResultWin");
-        this.lblResultLoose = resourceBundle.getString("lblResultLoose");
-        this.titleResult = resourceBundle.getString("titleResult");
-        this.lblScore = resourceBundle.getString("lblScore");
+    public ExitWindow(LanguageSettingsDAO languageSettingsDAO, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
+        this.languageSettingsDAO = languageSettingsDAO;
         showModalDialog(parentFrame, win, newScoreEntry);
     }
 
     private void showModalDialog(JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
-        JDialog dialog = new JDialog(parentFrame, titleResult, true);
+        JDialog dialog = new JDialog(parentFrame, languageSettingsDAO.getTitleResult(), true);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         dialog.setSize(250, 150);
@@ -39,30 +25,27 @@ public class ExitWindow {
 
         String lblResult;
         if (win) {
-            lblResult = lblResultWin;
+            lblResult = languageSettingsDAO.getLblResultWin();
         } else {
-            lblResult = lblResultLoose;
+            lblResult = languageSettingsDAO.getLblResultLoose();
         }
 
         JLabel resultMsg = new JLabel(lblResult);
         resultMsg.setHorizontalAlignment(JLabel.CENTER);
 
-        JLabel scoreMsg = new JLabel(lblScore + " " + newScoreEntry.getScore());
+        JLabel scoreMsg = new JLabel(languageSettingsDAO.getLblScore() + " " + newScoreEntry.getScore());
         scoreMsg.setHorizontalAlignment(JLabel.CENTER);
 
-        JButton newGameButton = new JButton(btnNewGame);
+        JButton newGameButton = new JButton(languageSettingsDAO.getBtnNewGame());
         newGameButton.addActionListener(e -> {
             dialog.dispose();
             parentFrame.dispose();
-            WelcomeWindow welcomeWindow = new WelcomeWindow(resourceBundle, newScoreEntry.getPlayerName());
+            WelcomeWindow welcomeWindow = new WelcomeWindow(languageSettingsDAO, newScoreEntry.getPlayerName());
             welcomeWindow.showWindow();
         });
 
-        JButton exitButton = new JButton(btnExit);
-        exitButton.addActionListener(e -> {
-            System.exit(0);
-        });
-
+        JButton exitButton = new JButton(languageSettingsDAO.getBtnExit());
+        exitButton.addActionListener(e -> System.exit(0));
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(newGameButton);

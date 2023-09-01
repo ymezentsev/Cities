@@ -2,51 +2,36 @@ package gui;
 
 import difficultyLevels.DifficultyLevelTimer;
 import gameLogic.GameLogic;
-import highscores.ScoreEntry;
+import languages.LanguageSettingsDAO;
+import lombok.Getter;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
-import java.util.ResourceBundle;
 
-public class MainWindow extends JFrame {
-    private ResourceBundle resourceBundle;
+//Show main window
+public class MainWindow {
+    private final LanguageSettingsDAO languageSettingsDAO;
+    private final DifficultyLevelTimer difficultyLevelTimer;
+    private final GameLogic gameLogic;
+    @Getter
     private JLabel timerLabel;
-    private JTextField inputField;
+    @Getter
     private JLabel computerLabel;
+    @Getter
     private JFrame frame;
-    private String makeMove;
-    private String inputLabelText;
-    private String computerLabelText;
-    private DifficultyLevelTimer difficultyLevelTimer;
-    private GameLogic gameLogic;
-    // private String inputCity;
+    private JTextField inputField;
 
-    public MainWindow(ResourceBundle resourceBundle, DifficultyLevelTimer difficultyLevelTimer, GameLogic gameLogic) {
-        this.resourceBundle = resourceBundle;
+    public MainWindow(LanguageSettingsDAO languageSettingsDAO, DifficultyLevelTimer difficultyLevelTimer, GameLogic gameLogic) {
+        this.languageSettingsDAO = languageSettingsDAO;
         this.difficultyLevelTimer = difficultyLevelTimer;
         this.gameLogic = gameLogic;
-        this.makeMove = resourceBundle.getString("makeMove");
-        this.inputLabelText = resourceBundle.getString("inputLabel");
-        this.computerLabelText = resourceBundle.getString("computerLabel");
         showWindow();
     }
 
-    public JLabel getTimerLabel() {
-        return timerLabel;
-    }
-
-    public JLabel getComputerLabel() {
-        return computerLabel;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
     private void showWindow() {
-        frame = new JFrame(resourceBundle.getString("title"));
+        frame = new JFrame(languageSettingsDAO.getTitle());
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
@@ -75,19 +60,15 @@ public class MainWindow extends JFrame {
 
         inputField = new JTextField();
         inputField.setHorizontalAlignment(JLabel.CENTER);
-        inputField.addActionListener(e -> {
-            makeMove();
-        });
+        inputField.addActionListener(e -> makeMove());
 
-        JLabel inputLabel = new JLabel(inputLabelText);
+        JLabel inputLabel = new JLabel(languageSettingsDAO.getInputLabel());
         inputLabel.setHorizontalAlignment(JLabel.LEFT);
 
-        JButton button = new JButton(makeMove);
-        button.addActionListener(e -> {
-            makeMove();
-        });
+        JButton button = new JButton(languageSettingsDAO.getMakeMove());
+        button.addActionListener(e -> makeMove());
 
-        computerLabel = new JLabel(computerLabelText);
+        computerLabel = new JLabel(languageSettingsDAO.getComputerLabel());
         computerLabel.setHorizontalAlignment(JLabel.LEFT);
 
 
@@ -146,37 +127,29 @@ public class MainWindow extends JFrame {
     private JMenuBar createMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu helpMenu = new JMenu(resourceBundle.getString("btnHelp"));
+        JMenu helpMenu = new JMenu(languageSettingsDAO.getBtnHelp());
         menuBar.add(helpMenu);
 
-        JMenuItem highScoresItem = new JMenuItem(resourceBundle.getString("titleHighScores"));
+        JMenuItem highScoresItem = new JMenuItem(languageSettingsDAO.getTitleHighScores());
         helpMenu.add(highScoresItem);
-        highScoresItem.addActionListener(e -> {
-                    //треба подумати як вивест вікно без передачі туди ScoreEntry
-                    new HighScoresWindow(resourceBundle, new ScoreEntry("test", 0)).showWindow();
-                }
+        highScoresItem.addActionListener(e -> new HighScoresWindow(languageSettingsDAO).showWindow()
         );
 
-        JMenuItem rulesItem = new JMenuItem(resourceBundle.getString("btnRules"));
+        JMenuItem rulesItem = new JMenuItem(languageSettingsDAO.getBtnRules());
         helpMenu.add(rulesItem);
-        rulesItem.addActionListener(e -> {
-                    new RulesWindow(resourceBundle).showModalDialog(frame);
-                }
+        rulesItem.addActionListener(e -> new RulesWindow(languageSettingsDAO).showModalDialog(frame)
         );
 
-        JMenuItem aboutItem = new JMenuItem(resourceBundle.getString("btnAbout"));
+        JMenuItem aboutItem = new JMenuItem(languageSettingsDAO.getBtnAbout());
         helpMenu.add(aboutItem);
-        aboutItem.addActionListener(e -> {
-                    new AboutWindow(resourceBundle).showAboutDialog(frame);
-                }
+        aboutItem.addActionListener(e -> new AboutWindow(languageSettingsDAO).showAboutDialog(frame)
         );
-
         return menuBar;
     }
 
     private void makeMove() {
         String input = inputField.getText().toLowerCase().trim();
-        if(input.isBlank()){
+        if (input.isBlank()) {
             return;
         }
         if (gameLogic.checks(input, getComputerLabel())) {
