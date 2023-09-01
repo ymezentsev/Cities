@@ -11058,7 +11058,6 @@ Dolores
 Dolores
 Dolores
 Dolores
-Dolores Hidalgo Cuna de la Independencia Nacional
 Dolton
 Dolyna
 Dolynska
@@ -13047,7 +13046,7 @@ Forquilhinha
 Forres
 Forrest City
 Forssa
-Forst (Lausitz)
+Forst
 Forster
 Fort Atkinson
 Fort Bliss
@@ -13173,7 +13172,7 @@ Frankfort
 Frankfort
 Frankfort Square
 Frankfurt
-Frankfurt (Oder)
+Frankfurt
 Franklin
 Franklin
 Franklin
@@ -21503,7 +21502,7 @@ Lauderdale Lakes
 Lauderhill
 Lauenburg
 Lauf
-Laufenburg (Baden)
+Laufenburg
 Lauffen am Neckar
 Lauingen
 Laukaa
@@ -22624,8 +22623,8 @@ Lubartow
 Lubawa
 Lubbecke
 Lubbeek
-Lubben (Spreewald)
-Lubbenau/Spreewald
+Lubben
+Lubbenau
 Lubbock
 Lubeck
 Lubin
@@ -32678,7 +32677,7 @@ Rheinbach
 Rheinberg
 Rheine
 Rheinfelden
-Rheinfelden (Baden)
+Rheinfelden
 Rhenen
 Rhennouch
 Rho
@@ -35131,7 +35130,7 @@ Santa Teresa
 Santa Teresa del Tuy
 Santa Teresa di Riva
 Santa Teresinha
-Santa Teresinha (2)
+Santa Teresinha
 Santa Teresita
 Santa Teresita
 Santa Terezinha de Goias
@@ -38057,7 +38056,6 @@ Stoneham
 Stonehaven
 Stonington
 Stony Brook
-Stony Brook University
 Stony Plain
 Stony Point
 Stord
@@ -42858,7 +42856,7 @@ Weissenburg
 Weissenfels
 Weissenhorn
 Weissenthurm
-Weisswasser/Oberlausitz
+Weisswasser
 Weiterstadt
 Weiyuan
 Weiyuan
@@ -42996,7 +42994,7 @@ West Mifflin
 West Milford
 West Monroe
 West New York
-West Nipissing / Nipissing Ouest
+West Nipissing
 West Norriton
 West Odessa
 West Orange
@@ -43081,7 +43079,7 @@ Wetaskiwin
 Wete
 Wetherby
 Wethersfield
-Wetter (Ruhr)
+Wetter
 Wetteren
 Wettingen
 Wetzikon
