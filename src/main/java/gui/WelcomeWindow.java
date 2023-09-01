@@ -63,7 +63,7 @@ public class WelcomeWindow {
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(490, 280));
+        frame.setPreferredSize(new Dimension(490, 325));
 
         createGUI(frame);
 
@@ -127,6 +127,9 @@ public class WelcomeWindow {
                 "src/main/resources/images/fr_flag.png", "fr", "FR", frame);
         JButton esButton = getButton("Ciudades de España",
                 "src/main/resources/images/es_flag.png", "es", "ES", frame);
+        JButton worldButton = getButton("Cities of the world",
+                "src/main/resources/images/world.png", "en", "US", frame);
+        worldButton.setSize(180, 25);
 
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JLabel.CENTER);
@@ -139,6 +142,7 @@ public class WelcomeWindow {
                 deButton.setEnabled(true);
                 frButton.setEnabled(true);
                 esButton.setEnabled(true);
+                worldButton.setEnabled(true);
             }
         });
 
@@ -214,6 +218,12 @@ public class WelcomeWindow {
         gbc.gridwidth = 1;
         panel.add(esButton, gbc);
 
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 3;
+        panel.add(worldButton, gbc);
+
         if (repeatGame) {
             uaButton.setEnabled(true);
             gbButton.setEnabled(true);
@@ -221,6 +231,7 @@ public class WelcomeWindow {
             deButton.setEnabled(true);
             frButton.setEnabled(true);
             esButton.setEnabled(true);
+            worldButton.setEnabled(true);
             textField.setVisible(false);
         }
 

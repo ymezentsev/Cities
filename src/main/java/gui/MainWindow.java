@@ -175,10 +175,13 @@ public class MainWindow extends JFrame {
     }
 
     private void makeMove() {
-        if (gameLogic.checks(inputField.getText().toLowerCase().trim(), getComputerLabel())) {
+        String input = inputField.getText().toLowerCase().trim();
+        if(input.isBlank()){
+            return;
+        }
+        if (gameLogic.checks(input, getComputerLabel())) {
             inputField.setText("");
             difficultyLevelTimer.setAnswerRight(true);
         }
-
     }
 }

@@ -114,9 +114,7 @@ public class GameLogic {
         }
 
         //замінити на вивід міста в основне вікно
-
         printComputerAnswer(computerLabel);
-
 
         usedCities.add(lastComputerCity);
         cities.remove(lastComputerCity);
