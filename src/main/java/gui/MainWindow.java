@@ -132,18 +132,19 @@ public class MainWindow {
 
         JMenuItem highScoresItem = new JMenuItem(languageSettingsDAO.getTitleHighScores());
         helpMenu.add(highScoresItem);
-        highScoresItem.addActionListener(e -> new HighScoresWindow(languageSettingsDAO).showWindow()
-        );
+        highScoresItem.addActionListener(e -> new HighScoresWindow(languageSettingsDAO).showWindow());
+        highScoresItem.setAccelerator(KeyStroke.getKeyStroke("alt S"));
 
         JMenuItem rulesItem = new JMenuItem(languageSettingsDAO.getBtnRules());
         helpMenu.add(rulesItem);
-        rulesItem.addActionListener(e -> new RulesWindow(languageSettingsDAO).showModalDialog(frame)
-        );
+        rulesItem.addActionListener(e -> new RulesWindow(languageSettingsDAO).showModalDialog(frame));
+        rulesItem.setAccelerator(KeyStroke.getKeyStroke("alt R"));
 
         JMenuItem aboutItem = new JMenuItem(languageSettingsDAO.getBtnAbout());
         helpMenu.add(aboutItem);
-        aboutItem.addActionListener(e -> new AboutWindow(languageSettingsDAO).showAboutDialog(frame)
-        );
+        aboutItem.addActionListener(e -> new AboutWindow(languageSettingsDAO).showAboutDialog(frame));
+        aboutItem.setAccelerator(KeyStroke.getKeyStroke("alt A"));
+
         return menuBar;
     }
 
