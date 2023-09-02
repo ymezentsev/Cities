@@ -1,5 +1,6 @@
 package gui;
 
+import gui.design.CustomButtonUIWW;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
 
@@ -36,6 +37,7 @@ public class HighScoresWindow extends JFrame {
         this.newScoreEntry = newScoreEntry;
     }
     public void showWindow() {
+        SwingUtilities.invokeLater(() -> {
         setTitle(titleHighScores);
         setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
@@ -43,6 +45,7 @@ public class HighScoresWindow extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
         createGUI();
+        });
     }
     private void createGUI() {
         tableModel = new DefaultTableModel(new String[]{columnRank, columnPlayer, columnScore}, 0);
@@ -56,6 +59,7 @@ public class HighScoresWindow extends JFrame {
         createTable(processor.processNewEntry(newScoreEntry));
 
         JButton exitButton = new JButton(btnExit);
+        exitButton.setUI(new CustomButtonUIWW());
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(exitButton, BorderLayout.SOUTH);
         exitButton.addActionListener(e -> this.dispose());

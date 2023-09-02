@@ -1,5 +1,7 @@
 package gui;
 
+import gui.design.CustomButtonUIWW;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -43,6 +45,7 @@ public class AboutWindow{
         panel.add(scrollPane);
 
         JButton okButton = new JButton(btnOk);
+        okButton.setUI(new CustomButtonUIWW());
         okButton.addActionListener(e -> dialog.dispose());
         panel.add(okButton);
 

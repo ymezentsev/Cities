@@ -2,6 +2,8 @@ package gui;
 
 import difficultyLevels.DifficultyLevelTimer;
 import gameLogic.GameLogic;
+import gui.design.CustomButtonUIWW;
+import gui.design.CustomMenuUI;
 import highscores.ScoreEntry;
 
 import javax.swing.*;
@@ -47,9 +49,9 @@ public class MainWindow extends JFrame {
 
     private void showWindow() {
         frame = new JFrame(resourceBundle.getString("title"));
+
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(400, 200));
 
@@ -83,6 +85,7 @@ public class MainWindow extends JFrame {
         inputLabel.setHorizontalAlignment(JLabel.LEFT);
 
         JButton button = new JButton(makeMove);
+        button.setUI(new CustomButtonUIWW());
         button.addActionListener(e -> {
             makeMove();
         });
@@ -147,6 +150,7 @@ public class MainWindow extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu helpMenu = new JMenu(resourceBundle.getString("btnHelp"));
+        helpMenu.setUI(new CustomMenuUI());
         menuBar.add(helpMenu);
 
         JMenuItem highScoresItem = new JMenuItem(resourceBundle.getString("titleHighScores"));

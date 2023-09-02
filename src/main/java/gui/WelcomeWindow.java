@@ -2,6 +2,8 @@ package gui;
 
 import difficultyLevels.DifficultyLevel;
 import gameLogic.GameCore;
+import gui.design.CustomButtonUIWW;
+import gui.design.GradientPanel;
 import languages.LanguageSelector;
 
 import javax.swing.*;
@@ -59,6 +61,8 @@ public class WelcomeWindow {
     //draw welcome window
     public void showWindow() {
         JFrame frame = new JFrame(title);
+        GradientPanel gradientPanel = new GradientPanel();
+        frame.setContentPane(gradientPanel);
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
@@ -74,7 +78,7 @@ public class WelcomeWindow {
 
     //window elements are drawn relative to each other
     private void createGUI(JFrame frame) {
-        JPanel panel = new JPanel();
+        GradientPanel panel = new GradientPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         panel.setLayout(gridBagLayout);
 
@@ -107,6 +111,12 @@ public class WelcomeWindow {
             difficultyLevel = DifficultyLevel.HARD;
         });
 
+        easyRadioButton.setForeground(new Color(0, 128, 0));
+        mediumRadioButton.setForeground(new Color(0, 111, 255));
+        hardRadioButton.setForeground(new Color(255, 0, 0));
+
+
+
         JPanel radioButtonPanel = new JPanel();
         radioButtonPanel.add(easyRadioButton);
         radioButtonPanel.add(mediumRadioButton);
@@ -117,19 +127,26 @@ public class WelcomeWindow {
 
         JButton uaButton = getButton("Міста України",
                 "src/main/resources/images/ua_flag.png", "uk", "UA", frame);
+        uaButton.setUI(new CustomButtonUIWW());
         JButton gbButton = getButton("Great Britain cities",
                 "src/main/resources/images/gb_flag.png", "en", "UK", frame);
+        gbButton.setUI(new CustomButtonUIWW());
         JButton svkButton = getButton("Mestá Slovenska",
                 "src/main/resources/images/svk_flag.png", "sk", "SK", frame);
+        svkButton.setUI(new CustomButtonUIWW());
         JButton deButton = getButton("Städte Deutschlands",
                 "src/main/resources/images/de_flag.png", "de", "DE", frame);
+        deButton.setUI(new CustomButtonUIWW());
         JButton frButton = getButton("Villes de France",
                 "src/main/resources/images/fr_flag.png", "fr", "FR", frame);
+        frButton.setUI(new CustomButtonUIWW());
         JButton esButton = getButton("Ciudades de España",
                 "src/main/resources/images/es_flag.png", "es", "ES", frame);
+        esButton.setUI(new CustomButtonUIWW());
         JButton worldButton = getButton("Cities of the world",
                 "src/main/resources/images/world.png", "en", "US", frame);
         worldButton.setSize(180, 25);
+        worldButton.setUI(new CustomButtonUIWW());
 
         JTextField textField = new JTextField();
         textField.setHorizontalAlignment(JLabel.CENTER);

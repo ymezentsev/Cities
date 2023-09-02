@@ -1,5 +1,7 @@
 package gui;
 
+import gui.design.CustomButtonUIWW;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -21,13 +23,14 @@ public class RulesWindow {
         JDialog dialog = new JDialog(parentFrame, titleRules, true);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
-        dialog.setSize(500, 300);
+        dialog.setSize(580, 290);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JTextArea textArea = new JTextArea(txtRules);
         textArea.setEditable(false);
 
         JButton closeButton = new JButton(btnOk);
+        closeButton.setUI(new CustomButtonUIWW());
         closeButton.addActionListener(e -> dialog.dispose());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(closeButton);
