@@ -7,9 +7,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 
-
+//class for reading data from file
 public class FileReaderImpl implements Reader {
-
     @Override
     public Set<String> readCitiesToList(String source) {
         Set<String> cities = new TreeSet<>();

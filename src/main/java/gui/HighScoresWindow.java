@@ -2,41 +2,26 @@ package gui;
 
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
+import languages.LanguageSettingsDAO;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 //read highscores.txt file that contains previous games results, sorted by higher score
-//add result of current game
 //Limits HighScore entries by 10.
-//Create and show High Scores table
-//saves updated high scores in file highscores.txt
 public class HighScoresWindow extends JFrame {
     private DefaultTableModel tableModel;
-    private final String btnExit;
-    private final String columnPlayer;
-    private final String columnRank;
-    private final String columnScore;
-    private final String titleHighScores;
+    private final LanguageSettingsDAO languageSettingsDAO;
 
-    ScoreEntry newScoreEntry;
-
-    public HighScoresWindow(ResourceBundle resourceBundle, ScoreEntry newScoreEntry) {
-
-        this.btnExit = resourceBundle.getString("btnExit");
-        this.columnPlayer = resourceBundle.getString("columnPlayer");
-        this.columnRank = resourceBundle.getString("columnRank");
-        this.columnScore = resourceBundle.getString("columnScore");
-        this.titleHighScores = resourceBundle.getString("titleHighScores");
-
-        this.newScoreEntry = newScoreEntry;
+    public HighScoresWindow(LanguageSettingsDAO languageSettingsDAO) {
+        this.languageSettingsDAO = languageSettingsDAO;
     }
+
     public void showWindow() {
-        setTitle(titleHighScores);
+        setTitle(languageSettingsDAO.getTitleHighScores());
         setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,7 +30,8 @@ public class HighScoresWindow extends JFrame {
         createGUI();
     }
     private void createGUI() {
-        tableModel = new DefaultTableModel(new String[]{columnRank, columnPlayer, columnScore}, 0);
+        tableModel = new DefaultTableModel(new String[]{languageSettingsDAO.getColumnRank(),
+                languageSettingsDAO.getColumnPlayer(), languageSettingsDAO.getColumnScore()}, 0);
         JTable scoresTable = new JTable(tableModel);
         scoresTable.setFont(new Font("Arial", Font.PLAIN, 14));
 
@@ -53,9 +39,9 @@ public class HighScoresWindow extends JFrame {
         getContentPane().add(scrollPane);
 
         HighScoresProcessor processor = new HighScoresProcessor();
-        createTable(processor.processNewEntry(newScoreEntry));
+        createTable(processor.readScoresFile());
 
-        JButton exitButton = new JButton(btnExit);
+        JButton exitButton = new JButton(languageSettingsDAO.getBtnExit());
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(exitButton, BorderLayout.SOUTH);
         exitButton.addActionListener(e -> this.dispose());

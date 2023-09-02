@@ -1,25 +1,28 @@
 package difficultyLevels;
 
 import gameLogic.GameLogic;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.awt.*;
 
+//class which control timer for user's answer
 public class DifficultyLevelTimer {
-    private DifficultyLevel difficultyLevel;
-    private GameLogic gameLogic;
+    private final DifficultyLevel difficultyLevel;
+    private final GameLogic gameLogic;
+    @Setter
     private boolean isAnswerRight;
+    @Setter
+    private boolean isGameOver;
 
     public DifficultyLevelTimer(DifficultyLevel difficultyLevel, GameLogic gameLogic) {
         this.difficultyLevel = difficultyLevel;
         this.gameLogic = gameLogic;
         isAnswerRight = false;
+        isGameOver = false;
     }
 
-    public void setAnswerRight(boolean isAnswerRight) {
-        this.isAnswerRight = isAnswerRight;
-    }
-
+    //timer for user's answer
     public void timer(JLabel label) {
         if (difficultyLevel == DifficultyLevel.EASY) {
             return;
@@ -43,6 +46,11 @@ public class DifficultyLevelTimer {
             if (isAnswerRight) {
                 counter = difficultyLevel.getTimeForAnswer() + 1;
                 isAnswerRight = false;
+            }
+
+            //if user or computer win stop timer
+            if (isGameOver){
+                return;
             }
         }
         //if timer value = 0 user lost

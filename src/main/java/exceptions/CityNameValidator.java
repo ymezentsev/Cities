@@ -1,13 +1,13 @@
 package exceptions;
 
+import lombok.AllArgsConstructor;
+
 import java.util.Set;
 
+//class for validation user input data
+@AllArgsConstructor
 public class CityNameValidator {
     private final Set<String> cityDatabase;
-
-    public CityNameValidator(Set<String> cityDatabase) {
-        this.cityDatabase = cityDatabase;
-    }
 
     public boolean isCityInDatabase(String city) {
         return cityDatabase.contains(city.toLowerCase());

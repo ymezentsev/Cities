@@ -1,23 +1,23 @@
 package highscores;
 
+import lombok.NoArgsConstructor;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//class for getting and update high scores table
+@NoArgsConstructor
 public class HighScoresProcessor {
     private final File scoresFile = new File("src/main/resources/highscores.txt");
 
-    public HighScoresProcessor() {
-    }
-
-    public ArrayList<ScoreEntry> processNewEntry(ScoreEntry newScoreEntry) {
+    public void processNewEntry(ScoreEntry newScoreEntry) {
         ArrayList<ScoreEntry> scores = readScoresFile();
         updateScoresTable(newScoreEntry, scores);
         writeScoresFile(scores);
-        return scores;
     }
 
-    private ArrayList<ScoreEntry> readScoresFile() {
+    public ArrayList<ScoreEntry> readScoresFile() {
         ArrayList<ScoreEntry> scores = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(scoresFile))) {
             String line;

@@ -2,9 +2,9 @@ player 40
 computer 20
 sd 10
 qwe123 8
+sd 8
+user7 8
+user7 8
+user5 8
 йцу123 4
-лщлзд 4
-гыук2 2
-гыук2 2
-гыук2 2
-гыук2 2
+df 4
