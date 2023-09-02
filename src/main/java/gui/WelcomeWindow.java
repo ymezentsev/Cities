@@ -25,7 +25,7 @@ public class WelcomeWindow {
     //called when the program started at first
     public WelcomeWindow() {
         languageSettingsDAO = new LanguageSettingsDAO(
-                new LanguageSelector().getResourceBundle("en","UK"));
+                new LanguageSelector().getResourceBundle("en", "UK"));
         this.welcomeText1 = "Welcome to the game \"Cities of the World\"";
         this.welcomeText2 = "To continue, enter your name";
         this.welcomeText3 = "and select the country of which cities you want to play";
@@ -51,7 +51,11 @@ public class WelcomeWindow {
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(490, 325));
+        if (repeatGame) {
+            frame.setPreferredSize(new Dimension(490, 290));
+        } else {
+            frame.setPreferredSize(new Dimension(490, 325));
+        }
 
         createGUI(frame);
 
