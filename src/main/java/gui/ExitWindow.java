@@ -19,7 +19,6 @@ public class ExitWindow {
     private final String lblResultLoose;
     private final String titleResult;
     private final String lblScore;
-    private GradientPanel gradientPanel;
 
     public ExitWindow(ResourceBundle resourceBundle, JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
         //current game winner
@@ -31,12 +30,10 @@ public class ExitWindow {
         this.titleResult = resourceBundle.getString("titleResult");
         this.lblScore = resourceBundle.getString("lblScore");
         showModalDialog(parentFrame, win, newScoreEntry);
-        this.gradientPanel = new GradientPanel();
     }
 
     private void showModalDialog(JFrame parentFrame, boolean win, ScoreEntry newScoreEntry) {
         JDialog dialog = new JDialog(parentFrame, titleResult, true);
-        dialog.setContentPane(gradientPanel);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         dialog.setSize(250, 150);
