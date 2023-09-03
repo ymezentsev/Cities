@@ -118,6 +118,7 @@ public class WelcomeWindow {
 
 
         JPanel radioButtonPanel = new JPanel();
+        radioButtonPanel.setOpaque(false);
         radioButtonPanel.add(easyRadioButton);
         radioButtonPanel.add(mediumRadioButton);
         radioButtonPanel.add(hardRadioButton);

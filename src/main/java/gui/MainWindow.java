@@ -4,6 +4,7 @@ import difficultyLevels.DifficultyLevelTimer;
 import gameLogic.GameLogic;
 import gui.design.CustomButtonUIWW;
 import gui.design.CustomMenuUI;
+import gui.design.GradientPanel;
 import highscores.ScoreEntry;
 
 import javax.swing.*;
@@ -33,6 +34,22 @@ public class MainWindow extends JFrame {
         this.inputLabelText = resourceBundle.getString("inputLabel");
         this.computerLabelText = resourceBundle.getString("computerLabel");
         showWindow();
+
+        frame = new JFrame(resourceBundle.getString("title"));
+        frame.setIconImage(Toolkit.getDefaultToolkit().getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(400, 200));
+
+        GradientPanel gradientPanel = new GradientPanel();
+        gradientPanel.setBackgroundColor(new Color(209, 232, 255));
+        frame.setContentPane(gradientPanel);
+
+        createGUI(frame);
+
+        frame.setJMenuBar(createMenuBar(frame));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     public JLabel getTimerLabel() {
@@ -54,7 +71,6 @@ public class MainWindow extends JFrame {
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(400, 200));
-
         createGUI(frame);
 
         frame.setJMenuBar(createMenuBar(frame));
@@ -68,8 +84,9 @@ public class MainWindow extends JFrame {
         GridBagLayout gridBagLayout = new GridBagLayout();
         contentPanel.setLayout(gridBagLayout);
 
+
+
         timerLabel = new JLabel("  ", JLabel.CENTER);
-        timerLabel.setForeground(Color.BLUE);
         timerLabel.setFont(new Font("Arial", Font.BOLD, 30));
         timerLabel.setPreferredSize(new Dimension(60, 30));
         Border border = BorderFactory.createEtchedBorder();

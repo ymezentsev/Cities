@@ -12,22 +12,21 @@ public class CustomButtonUIWW extends BasicButtonUI {
     public void installUI(JComponent c) {
         super.installUI(c);
         AbstractButton button = (AbstractButton) c;
-        button.setBackground(new Color(192, 192, 192)); // Встановіть фон кнопки тут
-        button.setForeground(new Color(0, 0, 0)); // Встановіть колір тексту кнопки тут
-        button.setBorderPainted(false); // Збережіть розмір кнопки без рамки
+        button.setBackground(new Color(209, 232, 255));
+        button.setForeground(new Color(0, 0, 0));
+        button.setBorderPainted(false);
 
-        // Додайте обробку подій наведення миші
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent evt) {
-                button.setBackground(new Color(153, 153, 153)); // Новий фон при наведенні
-                button.setForeground(new Color(0, 89, 255)); // Новий колір тексту при наведенні
+                button.setBackground(new Color(238, 242, 252));
+                button.setForeground(new Color(0, 89, 255));
             }
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                button.setBackground(new Color(192, 192, 192)); // Повертаємо фон при знятті наведення
-                button.setForeground(new Color(0, 0, 0)); // Повертаємо колір тексту при знятті наведення
+                button.setBackground(new Color(209, 232, 255));
+                button.setForeground(new Color(0, 0, 0));
             }
         });
     }

@@ -8,14 +8,14 @@ import java.awt.geom.Rectangle2D;
 public class GradientPanel extends JPanel {
     private Color backgroundColor;
     public GradientPanel() {
-        this.backgroundColor = new Color(255, 255, 255);
+        this.backgroundColor = new Color(255, 0, 0);
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Color startColor = new Color(215, 215, 215);
-        Color endColor = new Color(121, 121, 121);
+        Color startColor = new Color(255, 255, 255);
+        Color endColor = new Color(209, 232, 255);
 
         // Створюємо об'єкт градієнта
         GradientPaint gradient = new GradientPaint(
