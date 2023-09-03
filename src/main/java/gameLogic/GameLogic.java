@@ -8,11 +8,14 @@ import gui.MainWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
 import languages.LanguageSettingsDAO;
+import java.awt.Color;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 //logic of the game
@@ -59,30 +62,43 @@ public class GameLogic {
 
         //check - repeat city
         if (usedCities.contains(inputCity)) {
+            UIManager.put("OptionPane.background", new Color(209, 232, 255));
+            UIManager.put("Panel.background", new Color(209, 232, 255));
             JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getRepeatCity(),
                     languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
+            UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
+            UIManager.put("Panel.background", UIManager.get("Panel.background"));
             return false;
         }
 
         //check - correct first letter
         if (lastComputerCity != null) {
             if (!new CityNameValidator(cities).isFirstLetterCorrect(lastComputerCity, inputCity)) {
+                UIManager.put("OptionPane.background", new Color(209, 232, 255));
+                UIManager.put("Panel.background", new Color(209, 232, 255));
                 JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getErrorFirstLetter(),
                         languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
+                UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
+                UIManager.put("Panel.background", UIManager.get("Panel.background"));
                 return false;
             }
         }
 
         //check - if city in database
         if (!new CityNameValidator(cities).isCityInDatabase(inputCity)) {
+            UIManager.put("OptionPane.background", new Color(209, 232, 255));
+            UIManager.put("Panel.background", new Color(211, 232, 252));
             JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getErrorCity(),
                     languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
+            UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
+            UIManager.put("Panel.background", UIManager.get("Panel.background"));
             return false;
         }
 
         makeMove(inputCity, computerLabel);
         return true;
     }
+
 
     private void makeMove(String inputCity, JLabel computerLabel) {
         countUserStep++;
