@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+//This window shows information about game
 @AllArgsConstructor
 public class AboutWindow {
     private final LanguageSettingsDAO languageSettingsDAO;
