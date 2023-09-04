@@ -13,7 +13,7 @@ letter of the entered word, the computer searches
 for and selects a word that starts a new word in
 response.
 
-![img_2.png](src/main/resources/images/readme/img_4.png)
+![img_2.png](src/main/resources/images/readme/img_2.png)
 
 Words repeating is not allowed. Points are kept track of, and
 the data entered by the player is validated.
