@@ -14,6 +14,8 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import static gui.design.GradientPanel.*;
+
 //read highscores.txt file that contains previous games results, sorted by higher score
 //Limits HighScore entries by 10.
 @RequiredArgsConstructor
@@ -59,7 +61,7 @@ public class HighScoresWindow extends JFrame {
 
         JButton exitButton = new JButton(languageSettingsDto.getBtnExit());
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setBackground(new Color(209, 232, 255));
+        buttonPanel.setBackground(new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
         buttonPanel.add(exitButton, BorderLayout.SOUTH);
         exitButton.addActionListener(e -> this.dispose());
 

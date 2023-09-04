@@ -14,6 +14,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import static gui.design.GradientPanel.*;
+
 //Show welcome window when game start
 public class WelcomeWindow {
     private final LanguageSettingsDto languageSettingsDto;
@@ -249,8 +251,8 @@ public class WelcomeWindow {
 
         button.addActionListener(e -> {
             if (userName.isBlank()) {
-                UIManager.put("OptionPane.background", new Color(209, 232, 255));
-                UIManager.put("Panel.background", new Color(209, 232, 255));
+                UIManager.put("OptionPane.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
+                UIManager.put("Panel.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
                 JOptionPane.showMessageDialog(frame, "You must enter a username!",
                         "Error", JOptionPane.ERROR_MESSAGE);
             } else {

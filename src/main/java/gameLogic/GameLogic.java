@@ -8,7 +8,9 @@ import gui.MainWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
 import languages.LanguageSettingsDto;
+
 import java.awt.Color;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +18,10 @@ import javax.swing.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_RED;
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_GREEN;
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_BLUE;
 
 //logic of the game
 public class GameLogic {
@@ -61,8 +67,8 @@ public class GameLogic {
 
         //check - repeat city
         if (usedCities.contains(inputCity)) {
-            UIManager.put("OptionPane.background", new Color(209, 232, 255));
-            UIManager.put("Panel.background", new Color(209, 232, 255));
+            UIManager.put("OptionPane.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
+            UIManager.put("Panel.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
             JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getRepeatCity(),
                     languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -71,8 +77,8 @@ public class GameLogic {
         //check - correct first letter
         if (lastComputerCity != null) {
             if (!new CityNameValidator(cities).isFirstLetterCorrect(lastComputerCity, inputCity)) {
-                UIManager.put("OptionPane.background", new Color(209, 232, 255));
-                UIManager.put("Panel.background", new Color(209, 232, 255));
+                UIManager.put("OptionPane.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
+                UIManager.put("Panel.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
                 JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getErrorFirstLetter(),
                         languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
                 return false;
@@ -81,8 +87,8 @@ public class GameLogic {
 
         //check - if city in database
         if (!new CityNameValidator(cities).isCityInDatabase(inputCity)) {
-            UIManager.put("OptionPane.background", new Color(209, 232, 255));
-            UIManager.put("Panel.background", new Color(211, 232, 252));
+            UIManager.put("OptionPane.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
+            UIManager.put("Panel.background", new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
             JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getErrorCity(),
                     languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -91,7 +97,6 @@ public class GameLogic {
         makeMove(inputCity, computerLabel);
         return true;
     }
-
 
     private void makeMove(String inputCity, JLabel computerLabel) {
         countUserStep++;

@@ -6,13 +6,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_RED;
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_GREEN;
+import static gui.design.GradientPanel.MAIN_COLOR_VALUE_OF_BLUE;
+
 //class that defines the appearance of the buttons
 public class CustomButton extends BasicButtonUI {
     @Override
     public void installUI(JComponent c) {
         super.installUI(c);
         AbstractButton button = (AbstractButton) c;
-        button.setBackground(new Color(209, 232, 255));
+        button.setBackground(new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
         button.setForeground(new Color(0, 0, 0));
         button.setBorderPainted(true);
 
@@ -25,7 +29,7 @@ public class CustomButton extends BasicButtonUI {
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                button.setBackground(new Color(209, 232, 255));
+                button.setBackground(new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
                 button.setForeground(new Color(0, 0, 0));
             }
         });

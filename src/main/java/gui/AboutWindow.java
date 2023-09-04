@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
+import static gui.design.GradientPanel.*;
+
 //This window shows information about game
 @AllArgsConstructor
 public class AboutWindow {
@@ -30,7 +32,7 @@ public class AboutWindow {
         textArea.setEditable(false);
         textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
         textArea.setAlignmentY(Component.CENTER_ALIGNMENT);
-        textArea.setBackground(new Color(228, 241, 255));
+        textArea.setBackground(new Color(MAIN_COLOR_VALUE_OF_RED, MAIN_COLOR_VALUE_OF_GREEN, MAIN_COLOR_VALUE_OF_BLUE));
         textArea.setOpaque(true);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
