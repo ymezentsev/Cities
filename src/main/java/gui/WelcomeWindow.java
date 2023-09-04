@@ -5,7 +5,7 @@ import gameLogic.GameCore;
 import gui.design.CustomButton;
 import gui.design.GradientPanel;
 import languages.LanguageSelector;
-import languages.LanguageSettingsDAO;
+import languages.LanguageSettingsDto;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -16,7 +16,7 @@ import java.io.File;
 
 //Show welcome window when game start
 public class WelcomeWindow {
-    private final LanguageSettingsDAO languageSettingsDAO;
+    private final LanguageSettingsDto languageSettingsDto;
     private final String welcomeText1;
     private final String welcomeText2;
     private final String welcomeText3;
@@ -26,7 +26,7 @@ public class WelcomeWindow {
 
     //called when the program started at first
     public WelcomeWindow() {
-        languageSettingsDAO = new LanguageSettingsDAO(
+        languageSettingsDto = new LanguageSettingsDto(
                 new LanguageSelector().getResourceBundle("en", "UK"));
         this.welcomeText1 = "Welcome to the game \"Cities of the World\"";
         this.welcomeText2 = "To continue, enter your name";
@@ -36,19 +36,19 @@ public class WelcomeWindow {
     }
 
     //called when the user wants to play again
-    public WelcomeWindow(LanguageSettingsDAO languageSettingsDAO, String userName) {
+    public WelcomeWindow(LanguageSettingsDto languageSettingsDto, String userName) {
         this.repeatGame = true;
         this.userName = userName;
-        this.languageSettingsDAO = languageSettingsDAO;
-        this.welcomeText1 = languageSettingsDAO.getRepeatGameText() + ", " + userName + "?";
-        this.welcomeText2 = languageSettingsDAO.getWelcomeText2();
+        this.languageSettingsDto = languageSettingsDto;
+        this.welcomeText1 = languageSettingsDto.getRepeatGameText() + ", " + userName + "?";
+        this.welcomeText2 = languageSettingsDto.getWelcomeText2();
         this.welcomeText3 = "";
         this.difficultyLevel = DifficultyLevel.EASY;
     }
 
     //draw welcome window
     public void showWindow() {
-        JFrame frame = new JFrame(languageSettingsDAO.getTitle());
+        JFrame frame = new JFrame(languageSettingsDto.getTitle());
         GradientPanel gradientPanel = new GradientPanel();
         frame.setContentPane(gradientPanel);
         frame.setIconImage(Toolkit.getDefaultToolkit()
@@ -85,9 +85,9 @@ public class WelcomeWindow {
         JLabel text3 = new JLabel(welcomeText3);
         text3.setHorizontalAlignment(JLabel.CENTER);
 
-        JRadioButton easyRadioButton = new JRadioButton(languageSettingsDAO.getEasyRadioButtonName(), true);
-        JRadioButton mediumRadioButton = new JRadioButton(languageSettingsDAO.getMediumRadioButtonName());
-        JRadioButton hardRadioButton = new JRadioButton(languageSettingsDAO.getHardRadioButtonName());
+        JRadioButton easyRadioButton = new JRadioButton(languageSettingsDto.getEasyRadioButtonName(), true);
+        JRadioButton mediumRadioButton = new JRadioButton(languageSettingsDto.getMediumRadioButtonName());
+        JRadioButton hardRadioButton = new JRadioButton(languageSettingsDto.getHardRadioButtonName());
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(easyRadioButton);
         buttonGroup.add(mediumRadioButton);
@@ -100,6 +100,9 @@ public class WelcomeWindow {
         easyRadioButton.setForeground(new Color(0, 128, 0));
         mediumRadioButton.setForeground(new Color(0, 111, 255));
         hardRadioButton.setForeground(new Color(255, 0, 0));
+        easyRadioButton.setOpaque(false);
+        mediumRadioButton.setOpaque(false);
+        hardRadioButton.setOpaque(false);
 
         JPanel radioButtonPanel = new JPanel();
         radioButtonPanel.setOpaque(false);
@@ -107,31 +110,24 @@ public class WelcomeWindow {
         radioButtonPanel.add(mediumRadioButton);
         radioButtonPanel.add(hardRadioButton);
         Border border = BorderFactory.createEtchedBorder();
-        Border borderTitle = BorderFactory.createTitledBorder(border, languageSettingsDAO.getRadioButtonsTitle(),
+        Border borderTitle = BorderFactory.createTitledBorder(border, languageSettingsDto.getRadioButtonsTitle(),
                 TitledBorder.CENTER, TitledBorder.CENTER);
         radioButtonPanel.setBorder(borderTitle);
 
         JButton uaButton = getButton("Міста України",
                 "src/main/resources/images/ua_flag.png", "uk", "UA", frame);
-        uaButton.setUI(new CustomButton());
         JButton gbButton = getButton("Great Britain cities",
                 "src/main/resources/images/gb_flag.png", "en", "UK", frame);
-        gbButton.setUI(new CustomButton());
         JButton svkButton = getButton("Mestá Slovenska",
                 "src/main/resources/images/svk_flag.png", "sk", "SK", frame);
-        svkButton.setUI(new CustomButton());
         JButton deButton = getButton("Städte Deutschlands",
                 "src/main/resources/images/de_flag.png", "de", "DE", frame);
-        deButton.setUI(new CustomButton());
         JButton frButton = getButton("Villes de France",
                 "src/main/resources/images/fr_flag.png", "fr", "FR", frame);
-        frButton.setUI(new CustomButton());
         JButton esButton = getButton("Ciudades de España",
                 "src/main/resources/images/es_flag.png", "es", "ES", frame);
-        esButton.setUI(new CustomButton());
         JButton worldButton = getButton("Cities of the world",
                 "src/main/resources/images/world.png", "en", "US", frame);
-        worldButton.setUI(new CustomButton());
         worldButton.setSize(180, 25);
 
         JTextField textField = new JTextField();
@@ -249,16 +245,19 @@ public class WelcomeWindow {
         button.setHorizontalTextPosition(AbstractButton.CENTER);
         button.setPreferredSize(new Dimension(155, 47));
         button.setEnabled(false);
+        button.setUI(new CustomButton());
 
         button.addActionListener(e -> {
             if (userName.isBlank()) {
+                UIManager.put("OptionPane.background", new Color(209, 232, 255));
+                UIManager.put("Panel.background", new Color(209, 232, 255));
                 JOptionPane.showMessageDialog(frame, "You must enter a username!",
                         "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 frame.dispose();
                 LanguageSelector languageSelector = new LanguageSelector();
-                LanguageSettingsDAO languageSettingsDAO = new LanguageSettingsDAO(languageSelector.getResourceBundle(language, country));
-                GameCore gameCore = new GameCore(languageSettingsDAO, userName, difficultyLevel);
+                LanguageSettingsDto languageSettingsDto = new LanguageSettingsDto(languageSelector.getResourceBundle(language, country));
+                GameCore gameCore = new GameCore(languageSettingsDto, userName, difficultyLevel);
                 gameCore.startGame();
             }
         });

@@ -3,7 +3,9 @@ package gui;
 import gui.design.GradientPanel;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
-import languages.LanguageSettingsDAO;
+import languages.LanguageSettingsDto;
+import lombok.RequiredArgsConstructor;
+
 import java.awt.Color;
 
 import javax.swing.*;
@@ -14,32 +16,28 @@ import java.util.ArrayList;
 
 //read highscores.txt file that contains previous games results, sorted by higher score
 //Limits HighScore entries by 10.
+@RequiredArgsConstructor
 public class HighScoresWindow extends JFrame {
     private DefaultTableModel tableModel;
-    private final LanguageSettingsDAO languageSettingsDAO;
-    private GradientPanel mainPanel;
-
-    public HighScoresWindow(LanguageSettingsDAO languageSettingsDAO) {
-        this.languageSettingsDAO = languageSettingsDAO;
-    }
+    private final LanguageSettingsDto languageSettingsDto;
 
     public void showWindow() {
-        setTitle(languageSettingsDAO.getTitleHighScores());
+        setTitle(languageSettingsDto.getTitleHighScores());
         setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 300);
         setLocationRelativeTo(null);
         createGUI();
     }
 
     private void createGUI() {
-        mainPanel = new GradientPanel();
+        GradientPanel mainPanel = new GradientPanel();
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.setBackgroundColor(new Color(209, 232, 255));
+        mainPanel.setBackgroundColor();
 
-        tableModel = new DefaultTableModel(new String[]{languageSettingsDAO.getColumnRank(),
-                languageSettingsDAO.getColumnPlayer(), languageSettingsDAO.getColumnScore()}, 0);
+        tableModel = new DefaultTableModel(new String[]{languageSettingsDto.getColumnRank(),
+                languageSettingsDto.getColumnPlayer(), languageSettingsDto.getColumnScore()}, 0);
         JTable scoresTable = new JTable(tableModel);
 
         scoresTable.setDefaultEditor(Object.class, null); // Встановлюємо тільки читання таблиці
@@ -59,7 +57,7 @@ public class HighScoresWindow extends JFrame {
         HighScoresProcessor processor = new HighScoresProcessor();
         createTable(processor.readScoresFile());
 
-        JButton exitButton = new JButton(languageSettingsDAO.getBtnExit());
+        JButton exitButton = new JButton(languageSettingsDto.getBtnExit());
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(209, 232, 255));
         buttonPanel.add(exitButton, BorderLayout.SOUTH);

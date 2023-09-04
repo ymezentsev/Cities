@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 //class which contains language-depending data
 @Getter
-public class LanguageSettingsDAO {
+public class LanguageSettingsDto {
     //WelcomeWindow
     private final String title;
     private final String welcomeText2;
@@ -58,7 +58,7 @@ public class LanguageSettingsDAO {
     private final String txtAbout;
     private final String versionLabel;
 
-    public LanguageSettingsDAO(ResourceBundle resourceBundle) {
+    public LanguageSettingsDto(ResourceBundle resourceBundle) {
         this.title = resourceBundle.getString("title");
         this.welcomeText2 = resourceBundle.getString("welcomeText2");
         this.repeatGameText = resourceBundle.getString("repeatGameText");

@@ -3,7 +3,7 @@ package gui;
 import difficultyLevels.DifficultyLevelTimer;
 import gameLogic.GameLogic;
 import gui.design.CustomButton;
-import languages.LanguageSettingsDAO;
+import languages.LanguageSettingsDto;
 import lombok.Getter;
 import gui.design.GradientPanel;
 
@@ -15,7 +15,7 @@ import java.io.File;
 
 //Show main window
 public class MainWindow {
-    private final LanguageSettingsDAO languageSettingsDAO;
+    private final LanguageSettingsDto languageSettingsDto;
     private final DifficultyLevelTimer difficultyLevelTimer;
     private final GameLogic gameLogic;
     @Getter
@@ -26,15 +26,15 @@ public class MainWindow {
     private JFrame frame;
     private JTextField inputField;
 
-    public MainWindow(LanguageSettingsDAO languageSettingsDAO, DifficultyLevelTimer difficultyLevelTimer, GameLogic gameLogic) {
-        this.languageSettingsDAO = languageSettingsDAO;
+    public MainWindow(LanguageSettingsDto languageSettingsDto, DifficultyLevelTimer difficultyLevelTimer, GameLogic gameLogic) {
+        this.languageSettingsDto = languageSettingsDto;
         this.difficultyLevelTimer = difficultyLevelTimer;
         this.gameLogic = gameLogic;
         showWindow();
     }
 
     private void showWindow() {
-        frame = new JFrame(languageSettingsDAO.getTitle());
+        frame = new JFrame(languageSettingsDto.getTitle());
         GradientPanel gradientPanel = new GradientPanel();
         frame.setContentPane(gradientPanel);
         frame.setIconImage(Toolkit.getDefaultToolkit()
@@ -67,14 +67,14 @@ public class MainWindow {
         inputField.setHorizontalAlignment(JLabel.CENTER);
         inputField.addActionListener(e -> makeMove());
 
-        JLabel inputLabel = new JLabel(languageSettingsDAO.getInputLabel());
+        JLabel inputLabel = new JLabel(languageSettingsDto.getInputLabel());
         inputLabel.setHorizontalAlignment(JLabel.LEFT);
 
-        JButton button = new JButton(languageSettingsDAO.getMakeMove());
+        JButton button = new JButton(languageSettingsDto.getMakeMove());
         button.setUI(new CustomButton());
         button.addActionListener(e -> makeMove());
 
-        computerLabel = new JLabel(languageSettingsDAO.getComputerLabel());
+        computerLabel = new JLabel(languageSettingsDto.getComputerLabel());
         computerLabel.setHorizontalAlignment(JLabel.LEFT);
 
 
@@ -133,22 +133,22 @@ public class MainWindow {
     private JMenuBar createMenuBar(JFrame frame) {
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu helpMenu = new JMenu(languageSettingsDAO.getBtnHelp());
+        JMenu helpMenu = new JMenu(languageSettingsDto.getBtnHelp());
         menuBar.add(helpMenu);
 
-        JMenuItem highScoresItem = new JMenuItem(languageSettingsDAO.getTitleHighScores());
+        JMenuItem highScoresItem = new JMenuItem(languageSettingsDto.getTitleHighScores());
         helpMenu.add(highScoresItem);
-        highScoresItem.addActionListener(e -> new HighScoresWindow(languageSettingsDAO).showWindow());
+        highScoresItem.addActionListener(e -> new HighScoresWindow(languageSettingsDto).showWindow());
         highScoresItem.setAccelerator(KeyStroke.getKeyStroke("alt S"));
 
-        JMenuItem rulesItem = new JMenuItem(languageSettingsDAO.getBtnRules());
+        JMenuItem rulesItem = new JMenuItem(languageSettingsDto.getBtnRules());
         helpMenu.add(rulesItem);
-        rulesItem.addActionListener(e -> new RulesWindow(languageSettingsDAO).showModalDialog(frame));
+        rulesItem.addActionListener(e -> new RulesWindow(languageSettingsDto).showModalDialog(frame));
         rulesItem.setAccelerator(KeyStroke.getKeyStroke("alt R"));
 
-        JMenuItem aboutItem = new JMenuItem(languageSettingsDAO.getBtnAbout());
+        JMenuItem aboutItem = new JMenuItem(languageSettingsDto.getBtnAbout());
         helpMenu.add(aboutItem);
-        aboutItem.addActionListener(e -> new AboutWindow(languageSettingsDAO).showAboutDialog(frame));
+        aboutItem.addActionListener(e -> new AboutWindow(languageSettingsDto).showAboutDialog(frame));
         aboutItem.setAccelerator(KeyStroke.getKeyStroke("alt A"));
 
         return menuBar;

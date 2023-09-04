@@ -7,20 +7,19 @@ import gui.ExitWindow;
 import gui.MainWindow;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
-import languages.LanguageSettingsDAO;
+import languages.LanguageSettingsDto;
 import java.awt.Color;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
 //logic of the game
 public class GameLogic {
-    private final LanguageSettingsDAO languageSettingsDAO;
+    private final LanguageSettingsDto languageSettingsDto;
     private final String userName;
     @Setter
     private DifficultyLevelTimer difficultyLevelTimer;
@@ -33,8 +32,8 @@ public class GameLogic {
     private String lastComputerCity;
     private final List<String> usedCities;
 
-    public GameLogic(LanguageSettingsDAO languageSettingsDAO, String userName) {
-        this.languageSettingsDAO = languageSettingsDAO;
+    public GameLogic(LanguageSettingsDto languageSettingsDto, String userName) {
+        this.languageSettingsDto = languageSettingsDto;
         this.userName = userName;
         countUserStep = 0;
         lastComputerCity = null;
@@ -49,13 +48,13 @@ public class GameLogic {
         HighScoresProcessor highScoresProcessor = new HighScoresProcessor();
         highScoresProcessor.processNewEntry(newScoreEntry);
         //open exit window
-        new ExitWindow(languageSettingsDAO, mainWindow.getFrame(), isUserWin,
+        new ExitWindow(languageSettingsDto, mainWindow.getFrame(), isUserWin,
                 new ScoreEntry(userName, countUserStep));
     }
 
     public boolean checks(String inputCity, JLabel computerLabel) {
         //check the exit word
-        if (inputCity.equalsIgnoreCase(languageSettingsDAO.getExitWord())) {
+        if (inputCity.equalsIgnoreCase(languageSettingsDto.getExitWord())) {
             endGame(countUserStep, false);
             return false;
         }
@@ -64,10 +63,8 @@ public class GameLogic {
         if (usedCities.contains(inputCity)) {
             UIManager.put("OptionPane.background", new Color(209, 232, 255));
             UIManager.put("Panel.background", new Color(209, 232, 255));
-            JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getRepeatCity(),
-                    languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
-            UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
-            UIManager.put("Panel.background", UIManager.get("Panel.background"));
+            JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getRepeatCity(),
+                    languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -76,10 +73,8 @@ public class GameLogic {
             if (!new CityNameValidator(cities).isFirstLetterCorrect(lastComputerCity, inputCity)) {
                 UIManager.put("OptionPane.background", new Color(209, 232, 255));
                 UIManager.put("Panel.background", new Color(209, 232, 255));
-                JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getErrorFirstLetter(),
-                        languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
-                UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
-                UIManager.put("Panel.background", UIManager.get("Panel.background"));
+                JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getErrorFirstLetter(),
+                        languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
                 return false;
             }
         }
@@ -88,10 +83,8 @@ public class GameLogic {
         if (!new CityNameValidator(cities).isCityInDatabase(inputCity)) {
             UIManager.put("OptionPane.background", new Color(209, 232, 255));
             UIManager.put("Panel.background", new Color(211, 232, 252));
-            JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDAO.getErrorCity(),
-                    languageSettingsDAO.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
-            UIManager.put("OptionPane.background", UIManager.get("OptionPane.background"));
-            UIManager.put("Panel.background", UIManager.get("Panel.background"));
+            JOptionPane.showMessageDialog(mainWindow.getFrame(), languageSettingsDto.getErrorCity(),
+                    languageSettingsDto.getErrorTitle(), JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
@@ -135,8 +128,8 @@ public class GameLogic {
         } catch (CityNameException e) {
             if (cityName.length() >= 2) {
                 cityName = cityName.substring(0, cityName.length() - 1);
-                JOptionPane.showMessageDialog(frame, languageSettingsDAO.getLastLetterException(),
-                        languageSettingsDAO.getLastLetterMessageTitle(), JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(frame, languageSettingsDto.getLastLetterException(),
+                        languageSettingsDto.getLastLetterMessageTitle(), JOptionPane.INFORMATION_MESSAGE);
             }
         }
         return cityName;

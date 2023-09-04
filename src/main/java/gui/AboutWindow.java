@@ -1,7 +1,7 @@
 package gui;
 
 import gui.design.GradientPanel;
-import languages.LanguageSettingsDAO;
+import languages.LanguageSettingsDto;
 import lombok.AllArgsConstructor;
 
 import javax.swing.*;
@@ -11,13 +11,13 @@ import java.io.File;
 //This window shows information about game
 @AllArgsConstructor
 public class AboutWindow {
-    private final LanguageSettingsDAO languageSettingsDAO;
+    private final LanguageSettingsDto languageSettingsDto;
 
     public void showAboutDialog(JFrame parentFrame) {
-        JDialog dialog = new JDialog(parentFrame, languageSettingsDAO.getTitleAboutWindow(), true);
+        JDialog dialog = new JDialog(parentFrame, languageSettingsDto.getTitleAboutWindow(), true);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
-        dialog.setTitle(languageSettingsDAO.getTitleAboutWindow());
+        dialog.setTitle(languageSettingsDto.getTitleAboutWindow());
         dialog.setSize(300, 250);
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parentFrame);
@@ -25,8 +25,8 @@ public class AboutWindow {
         GradientPanel panel = new GradientPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        JTextArea textArea = new JTextArea(languageSettingsDAO.getTxtAbout());
-        textArea.append(languageSettingsDAO.getVersionLabel());
+        JTextArea textArea = new JTextArea(languageSettingsDto.getTxtAbout());
+        textArea.append(languageSettingsDto.getVersionLabel());
         textArea.setEditable(false);
         textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
         textArea.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -38,7 +38,7 @@ public class AboutWindow {
 
         panel.add(scrollPane);
 
-        JButton okButton = new JButton(languageSettingsDAO.getBtnOk());
+        JButton okButton = new JButton(languageSettingsDto.getBtnOk());
         okButton.addActionListener(e -> dialog.dispose());
         panel.add(okButton);
 

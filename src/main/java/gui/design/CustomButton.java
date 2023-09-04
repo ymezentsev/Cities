@@ -6,15 +6,15 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+//class that defines the appearance of the buttons
 public class CustomButton extends BasicButtonUI {
-
     @Override
     public void installUI(JComponent c) {
         super.installUI(c);
         AbstractButton button = (AbstractButton) c;
         button.setBackground(new Color(209, 232, 255));
         button.setForeground(new Color(0, 0, 0));
-        button.setBorderPainted(false);
+        button.setBorderPainted(true);
 
         button.addMouseListener(new MouseAdapter() {
             @Override
