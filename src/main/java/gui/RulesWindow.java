@@ -1,5 +1,6 @@
 package gui;
 
+import gui.design.GradientPanel;
 import languages.LanguageSettingsDAO;
 import lombok.AllArgsConstructor;
 
@@ -16,24 +17,30 @@ public class RulesWindow {
         JDialog dialog = new JDialog(parentFrame, languageSettingsDAO.getTitleRules(), true);
         dialog.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
-        dialog.setSize(500, 300);
+        dialog.setSize(580, 290);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
+        GradientPanel innerPanel = new GradientPanel();
+        innerPanel.setLayout(new BorderLayout());
+        innerPanel.setBackgroundColor(new Color(209, 232, 255));
+
         JTextArea textArea = new JTextArea(languageSettingsDAO.getTxtRules());
+        textArea.setOpaque(false);
         textArea.setEditable(false);
+        textArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        textArea.setMargin(new Insets(10, 10, 10, 10));
 
         JButton closeButton = new JButton(languageSettingsDAO.getBtnOk());
         closeButton.addActionListener(e -> dialog.dispose());
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setOpaque(false);
         buttonPanel.add(closeButton);
 
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JScrollPane(textArea), BorderLayout.NORTH);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+        innerPanel.add(textArea, BorderLayout.CENTER);
+        innerPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        dialog.getContentPane().add(panel);
+        dialog.getContentPane().add(innerPanel);
         dialog.setLocationRelativeTo(parentFrame);
         dialog.setVisible(true);
     }
 }
-

@@ -1,5 +1,6 @@
 package gui;
 
+import gui.design.GradientPanel;
 import languages.LanguageSettingsDAO;
 import lombok.AllArgsConstructor;
 
@@ -9,7 +10,7 @@ import java.io.File;
 
 //This window shows information about game
 @AllArgsConstructor
-public class AboutWindow{
+public class AboutWindow {
     private final LanguageSettingsDAO languageSettingsDAO;
 
     public void showAboutDialog(JFrame parentFrame) {
@@ -21,7 +22,7 @@ public class AboutWindow{
         dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         dialog.setLocationRelativeTo(parentFrame);
 
-        JPanel panel = new JPanel();
+        GradientPanel panel = new GradientPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JTextArea textArea = new JTextArea(languageSettingsDAO.getTxtAbout());
@@ -29,6 +30,8 @@ public class AboutWindow{
         textArea.setEditable(false);
         textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
         textArea.setAlignmentY(Component.CENTER_ALIGNMENT);
+        textArea.setBackground(new Color(228, 241, 255));
+        textArea.setOpaque(true);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(250, 150));
@@ -43,4 +46,3 @@ public class AboutWindow{
         dialog.setVisible(true);
     }
 }
-

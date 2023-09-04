@@ -1,8 +1,10 @@
 package gui;
 
+import gui.design.GradientPanel;
 import highscores.HighScoresProcessor;
 import highscores.ScoreEntry;
 import languages.LanguageSettingsDAO;
+import java.awt.Color;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 public class HighScoresWindow extends JFrame {
     private DefaultTableModel tableModel;
     private final LanguageSettingsDAO languageSettingsDAO;
+    private GradientPanel mainPanel;
 
     public HighScoresWindow(LanguageSettingsDAO languageSettingsDAO) {
         this.languageSettingsDAO = languageSettingsDAO;
@@ -29,25 +32,46 @@ public class HighScoresWindow extends JFrame {
         setLocationRelativeTo(null);
         createGUI();
     }
+
     private void createGUI() {
+        mainPanel = new GradientPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackgroundColor(new Color(209, 232, 255));
+
         tableModel = new DefaultTableModel(new String[]{languageSettingsDAO.getColumnRank(),
                 languageSettingsDAO.getColumnPlayer(), languageSettingsDAO.getColumnScore()}, 0);
         JTable scoresTable = new JTable(tableModel);
+
+        scoresTable.setDefaultEditor(Object.class, null); // Встановлюємо тільки читання таблиці
+
+        scoresTable.setBackground(new Color(0, 0, 0, 0));
+        scoresTable.setOpaque(false);
+        scoresTable.getTableHeader().setOpaque(false);
+
         scoresTable.setFont(new Font("Arial", Font.PLAIN, 14));
 
         JScrollPane scrollPane = new JScrollPane(scoresTable);
-        getContentPane().add(scrollPane);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         HighScoresProcessor processor = new HighScoresProcessor();
         createTable(processor.readScoresFile());
 
         JButton exitButton = new JButton(languageSettingsDAO.getBtnExit());
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(new Color(209, 232, 255));
         buttonPanel.add(exitButton, BorderLayout.SOUTH);
         exitButton.addActionListener(e -> this.dispose());
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        getContentPane().add(mainPanel);
+
         setVisible(true);
     }
+
     private void createTable(ArrayList<ScoreEntry> scores) {
         tableModel.setRowCount(0);
         for (int i = 0; i < scores.size(); i++) {

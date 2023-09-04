@@ -2,13 +2,16 @@ package gui;
 
 import difficultyLevels.DifficultyLevelTimer;
 import gameLogic.GameLogic;
+import gui.design.CustomButton;
 import languages.LanguageSettingsDAO;
 import lombok.Getter;
+import gui.design.GradientPanel;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
+
 
 //Show main window
 public class MainWindow {
@@ -32,6 +35,8 @@ public class MainWindow {
 
     private void showWindow() {
         frame = new JFrame(languageSettingsDAO.getTitle());
+        GradientPanel gradientPanel = new GradientPanel();
+        frame.setContentPane(gradientPanel);
         frame.setIconImage(Toolkit.getDefaultToolkit()
                 .getImage(new File("src/main/resources/images/mainIcon.jpg").toString()));
 
@@ -47,7 +52,7 @@ public class MainWindow {
     }
 
     private void createGUI(JFrame frame) {
-        JPanel contentPanel = new JPanel(new GridBagLayout());
+        GradientPanel contentPanel = new GradientPanel();
         GridBagLayout gridBagLayout = new GridBagLayout();
         contentPanel.setLayout(gridBagLayout);
 
@@ -66,6 +71,7 @@ public class MainWindow {
         inputLabel.setHorizontalAlignment(JLabel.LEFT);
 
         JButton button = new JButton(languageSettingsDAO.getMakeMove());
+        button.setUI(new CustomButton());
         button.addActionListener(e -> makeMove());
 
         computerLabel = new JLabel(languageSettingsDAO.getComputerLabel());
