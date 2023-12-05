@@ -4,7 +4,7 @@
 
 ---
 On game launch, the player is prompted to enter
-their name and choose a language.
+his name and choose a language.
 
 ![img_1.png](src/main/resources/images/readme/img_1.png)
 
